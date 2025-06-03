@@ -105,6 +105,11 @@ h1#dynamic-heading > span.collapsible:last-child {
   /* overflow: hidden; Removed to test baseline alignment in flex */
 }
 
+#mega-mission-statement .mission-mega-highlight {
+  font-weight: 600; /* Changed from bold to 600 for a less bold look */
+  font-style: italic;
+}
+
 /* Responsive adjustments for mission statement on smaller screens */
 @media (max-width: 768px) {
   #mega-mission-statement {

@@ -1,0 +1,118 @@
+/* @font-face rule removed as we are using Google Fonts */
+
+/* CSS */
+/* :root Inter styles removed */
+
+body {
+  background-color: hsl(237, 10%, 54%); /* Initial duller, more greyish background color */
+  /* display: flex; remove flex for normal stacking */
+  /* justify-content: center; */
+  /* align-items: center; */
+  min-height: 100vh;
+  height: 400vh; /* Adjusted scroll height for three phases */
+  margin: 0;
+  padding-top: 50px; /* Add some padding at the top */
+  color: white;
+  font-family: "Work Sans", sans-serif; 
+  /* Ensure no body scrollbars if h1 is purely fixed and centered */
+  /* overflow: hidden; */ /* This might be too restrictive if you want other content */
+  will-change: background-color; /* Hint for animation */
+}
+
+h1#dynamic-heading {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 100vw;
+  transform: translateY(-50%) translateZ(0px);
+  margin: 0;
+  font-family: "Work Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-size: 2.5vw;
+  text-transform: uppercase;
+  will-change: font-weight, font-size, font-style, transform;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Specific initial settings for animated axes (like starting wght at 100) */
+/* will be handled by JS on first paint by dispatching scroll event. */
+/* Or, we can set them here if preferred, but JS will override on scroll. */
+/* For now, let JS handle the initial animated value setting. */
+
+/* Removed specific #h1-xxx font-variation-settings rules. JS will handle. */
+
+h1#dynamic-heading > span {
+  /* display: inline-block; Not needed for flex items, but individual children can be */
+  /* vertical-align: text-bottom; Not needed for flex items */
+}
+
+/* Style for the spinning G */
+#g-great {
+  display: inline-block; /* Crucial for transform to work as expected */
+  will-change: transform;
+  /* backface-visibility: hidden; Removed to make G visible with rotateY(180deg) */
+  transform-origin: center center; /* Explicitly set for potential Safari stability */
+  outline: 1px solid transparent; /* Another trick for Safari flickering */
+  font-style: normal; /* Ensure G starts normal, JS can override for final italic */
+}
+
+/* Styles for pulsing EARTH elements - Reverted */
+/*
+#initial-e,
+#collapsible-arth {
+  display: inline-block; 
+  will-change: transform; 
+}
+*/
+
+h1 span.collapsible {
+  opacity: 0; /* Start hidden */
+  max-width: 0px; /* Start with no width */
+  margin-right: 0.25em; 
+  /* font-size: 1em; /* JS will control effective font-size relative to parent */
+  /* transition: opacity 0.1s linear, font-size 0.1s linear, max-width 0.1s linear; /* Removed, JS handles */
+  will-change: opacity, font-size, max-width;
+  /* overflow: hidden; /* Removing this as it might interfere with flex centering */
+}
+
+/* Remove margin from the last collapsible span to help with overall centering */
+h1#dynamic-heading > span.collapsible:last-child {
+  margin-right: 0;
+}
+
+/* Removed .collapsible styles */
+
+#mega-mission-statement {
+  position: fixed;
+  bottom: -100vh; /* Start off-screen */
+  left: 0;
+  width: 100%;
+  padding: 20px 15%; /* Top/bottom 20px, Left/right 15% */
+  box-sizing: border-box;
+  color: white;
+  font-family: "Work Sans", sans-serif; /* Or your preferred font for this text */
+  font-size: 3em; /* Adjusted from 1.5em */
+  line-height: 1.6;
+  text-align: left; /* Changed from center to left */
+  opacity: 0; /* Start hidden */
+  will-change: bottom, opacity; /* Hint for animation */
+  z-index: 5; /* Ensure it's not behind other fixed elements if any */
+  /* overflow: hidden; Removed to test baseline alignment in flex */
+}
+
+/* Responsive adjustments for mission statement on smaller screens */
+@media (max-width: 768px) {
+  #mega-mission-statement {
+    font-size: 1.8em; /* Reduce mission statement font size on smaller screens */
+    padding: 20px 8%; /* Adjust padding for smaller screens */
+    line-height: 1.5; /* Adjust line-height if needed */
+  }
+}
+
+/* The entire @media (max-width: 768px) block will be removed. */
+/* All styles previously inside this block are now gone. */

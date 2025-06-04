@@ -9,11 +9,12 @@ body {
   /* justify-content: center; */
   /* align-items: center; */
   min-height: 100vh;
-  height: 400vh; /* Adjusted scroll height for three phases */
+  height: 300vh; /* Adjusted scroll height for new mission statement timing */
   margin: 0;
   padding-top: 50px; /* Add some padding at the top */
   color: white;
-  font-family: "Work Sans", sans-serif; 
+  font-family: "IBM Plex Sans", sans-serif; 
+  font-variation-settings: "wdth" 100, "wght" 300;
   /* Ensure no body scrollbars if h1 is purely fixed and centered */
   /* overflow: hidden; */ /* This might be too restrictive if you want other content */
   will-change: background-color; /* Hint for animation */
@@ -26,13 +27,14 @@ h1#dynamic-heading {
   width: 100vw;
   transform: translateY(-50%) translateZ(0px);
   margin: 0;
-  font-family: "Work Sans", sans-serif;
+  font-family: "IBM Plex Serif", serif; /* Default to IBM Plex Serif */
   font-optical-sizing: auto;
-  font-weight: 100;
-  font-style: normal;
+  /* font-weight: 100; Removed, will be class/JS controlled */
+  /* font-style: normal; Removed, will be class/JS controlled */
   font-size: 2.5vw;
   text-transform: uppercase;
-  will-change: font-weight, font-size, font-style, transform;
+  will-change: font-weight, font-size, font-style, transform, font-family, opacity, font-variation-settings; /* Added font-variation-settings */
+  opacity: 1; /* Ensure default opacity is 1 */
 
   display: flex;
   justify-content: center;
@@ -53,12 +55,11 @@ h1#dynamic-heading > span {
 
 /* Style for the spinning G */
 #g-great {
-  display: inline-block; /* Crucial for transform to work as expected */
-  will-change: transform;
-  /* backface-visibility: hidden; Removed to make G visible with rotateY(180deg) */
-  transform-origin: center center; /* Explicitly set for potential Safari stability */
-  outline: 1px solid transparent; /* Another trick for Safari flickering */
-  font-style: normal; /* Ensure G starts normal, JS can override for final italic */
+  display: inline-block; /* Crucial for an initial letter that might have specific styling */
+  /* will-change: transform; Removed as transform is now 'none' */
+  /* transform-origin: center center; Removed as transform is now 'none' */
+  /* outline: 1px solid transparent; Removed as it was for transform flickering */
+  /* font-style: normal; Removed to allow inheritance from parent h1 */
 }
 
 /* Styles for pulsing EARTH elements - Reverted */
@@ -71,13 +72,13 @@ h1#dynamic-heading > span {
 */
 
 h1 span.collapsible {
-  opacity: 0; /* Start hidden */
-  max-width: 0px; /* Start with no width */
+  opacity: 1; /* Start visible */
+  max-width: 500px; /* Start with enough width to be visible, JS will control collapse */
   margin-right: 0.25em; 
   /* font-size: 1em; /* JS will control effective font-size relative to parent */
   /* transition: opacity 0.1s linear, font-size 0.1s linear, max-width 0.1s linear; /* Removed, JS handles */
-  will-change: opacity, font-size, max-width;
-  /* overflow: hidden; /* Removing this as it might interfere with flex centering */
+  will-change: opacity, font-size, max-width, display; /* Added display */
+  display: inline-block; /* Ensure it's displayed initially */
 }
 
 /* Remove margin from the last collapsible span to help with overall centering */
@@ -89,26 +90,32 @@ h1#dynamic-heading > span.collapsible:last-child {
 
 #mega-mission-statement {
   position: fixed;
-  bottom: -100vh; /* Start off-screen */
+  /* bottom: -100vh; Removed */
+  top: 150vh; /* Start off-screen at the bottom */
   left: 0;
   width: 100%;
   padding: 20px 15%; /* Top/bottom 20px, Left/right 15% */
   box-sizing: border-box;
   color: white;
-  font-family: "Work Sans", sans-serif; /* Or your preferred font for this text */
+  font-family: "IBM Plex Sans", sans-serif; 
+  font-variation-settings: "wdth" 100, "wght" 400;
   font-size: 3em; /* Adjusted from 1.5em */
   line-height: 1.6;
   text-align: left; /* Changed from center to left */
   opacity: 0; /* Start hidden */
-  will-change: bottom, opacity; /* Hint for animation */
+  transform: translateY(0%); /* Initial transform */
+  will-change: top, opacity, transform; /* Updated will-change */
   z-index: 5; /* Ensure it's not behind other fixed elements if any */
   /* overflow: hidden; Removed to test baseline alignment in flex */
 }
 
 #mega-mission-statement .mission-mega-highlight {
-  font-weight: 600; /* Changed from bold to 600 for a less bold look */
-  font-style: italic;
+  /* font-weight: 600; Replaced by font-variation-settings */
+  font-style: italic; /* Ensuring italic style */
+  font-variation-settings: "wght" 600, "ital" 1, "wdth" 75; /* Changed wdth to 75 */
 }
+
+/* End Tinos Font Classes */
 
 /* Responsive adjustments for mission statement on smaller screens */
 @media (max-width: 768px) {
@@ -121,3 +128,93 @@ h1#dynamic-heading > span.collapsible:last-child {
 
 /* The entire @media (max-width: 768px) block will be removed. */
 /* All styles previously inside this block are now gone. */
+
+/* End Tinos Font Classes */
+
+/* Responsive adjustments for mission statement on smaller screens */
+.ibm-plex-serif-thin {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.ibm-plex-serif-extralight {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.ibm-plex-serif-light {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.ibm-plex-serif-regular {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.ibm-plex-serif-medium {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.ibm-plex-serif-semibold {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.ibm-plex-serif-bold {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.ibm-plex-serif-thin-italic {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.ibm-plex-serif-extralight-italic {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.ibm-plex-serif-light-italic {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.ibm-plex-serif-regular-italic {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.ibm-plex-serif-medium-italic {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.ibm-plex-serif-semibold-italic {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.ibm-plex-serif-bold-italic {
+  font-family: "IBM Plex Serif", serif;
+  font-weight: 700;
+  font-style: italic;
+}
+/* End IBM Plex Serif Classes */
+
+/* Responsive adjustments for mission statement on smaller screens */

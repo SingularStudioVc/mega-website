@@ -57,7 +57,7 @@ const MISSION_REVEAL_DURATION_FACTOR = 1.0; // Takes 1.0 * onePhaseScrollHeight 
 // For simplicity, let's make h1Phase1EndFontSize also target an EM value for a smoother transition to the final EM state.
 // OR, the transition in phase 2 will be from a calculated VW to a fixed EM.
 // Let's try the VW to EM transition first.
-let h1Phase1EndFontSizeValue = FONT_SIZE_CONFIG.max; // This will store the numeric VW value at the end of Phase 1
+// let h1Phase1EndFontSizeValue = FONT_SIZE_CONFIG.max; // This will store the numeric VW value at the end of Phase 1
 
 let h1InitialTransform = "translateY(-50%) translateZ(0px)";
 
@@ -75,7 +75,7 @@ window.addEventListener('scroll', () => {
 
   let phase1Progress = 0;
   let phase2Progress = 0;
-  let phase3Progress = 0;
+  // let phase3Progress = 0;
   let missionRevealProgress = 0;
 
   if (scrollTop < onePhaseScrollHeight) {
@@ -208,7 +208,7 @@ window.addEventListener('scroll', () => {
         heading.style.fontVariationSettings = `"wght" ${FONT_VARIATION_CONFIG.wght.max}, "wdth" ${FONT_VARIATION_CONFIG.wdth.min}, "ital" ${FONT_VARIATION_CONFIG.ital.on}`;
         heading.style.fontStyle = 'italic'; // Ensure italic
         heading.style.opacity = '1'; 
-        h1Phase1EndFontSizeValue = h1CurrentFontSizeForPhase1; 
+        // h1Phase1EndFontSizeValue = h1CurrentFontSizeForPhase1; 
         initialLetterSpans.forEach(span => {
             span.classList.remove('ibm-plex-serif-medium');
             const initialLetterWeight = Math.min(FONT_VARIATION_CONFIG.wght.max + INITIAL_LETTER_BOLDNESS_OFFSET, 700);
@@ -314,7 +314,7 @@ if (heading) {
   if (computedTransform && computedTransform !== 'none') {
     h1InitialTransform = computedTransform;
   }
-  h1Phase1EndFontSizeValue = FONT_SIZE_CONFIG.max; // Store the max VW value as the end of phase 1 default
+  // h1Phase1EndFontSizeValue = FONT_SIZE_CONFIG.max; // Store the max VW value as the end of phase 1 default
   document.body.style.backgroundColor = `hsl(${BG_COLOR_HUE}, ${BG_COLOR_START_SATURATION}%, ${BG_COLOR_LIGHTNESS}%)`;
   heading.style.top = '50%';
   heading.style.transform = h1InitialTransform;

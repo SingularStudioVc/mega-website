@@ -3,116 +3,335 @@
 /* CSS */
 /* :root Inter styles removed */
 
+html {
+  background-color: hsl(237, 10%, 54%);
+}
+
 body {
-  background-color: hsl(237, 10%, 54%); /* Initial duller, more greyish background color */
-  /* display: flex; remove flex for normal stacking */
-  /* justify-content: center; */
-  /* align-items: center; */
-  min-height: 100vh;
-  height: 300vh; /* Adjusted scroll height for new mission statement timing */
+  height: auto; /* Adjusted scroll height for new animation */
   margin: 0;
-  padding-top: 50px; /* Add some padding at the top */
   color: white;
-  font-family: "IBM Plex Sans", sans-serif; 
+  font-family: "IBM Plex Sans", sans-serif;
   font-variation-settings: "wdth" 100, "wght" 300;
-  /* Ensure no body scrollbars if h1 is purely fixed and centered */
-  /* overflow: hidden; */ /* This might be too restrictive if you want other content */
+  overflow-x: hidden;
   will-change: background-color; /* Hint for animation */
 }
 
-h1#dynamic-heading {
-  position: fixed;
-  top: 50%;
-  left: 0;
-  width: 100vw;
-  transform: translateY(-50%) translateZ(0px);
-  margin: 0;
-  font-family: "IBM Plex Serif", serif; /* Default to IBM Plex Serif */
-  font-optical-sizing: auto;
-  /* font-weight: 100; Removed, will be class/JS controlled */
-  /* font-style: normal; Removed, will be class/JS controlled */
-  font-size: 2.5vw;
-  text-transform: uppercase;
-  will-change: font-weight, font-size, font-style, transform, font-family, opacity, font-variation-settings; /* Added font-variation-settings */
-  opacity: 1; /* Ensure default opacity is 1 */
+#main-wrapper {
+  background-color: hsl(237, 10%, 54%); /* Initial duller, more greyish background color */
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  will-change: background-color; /* Hint for animation */
+}
 
+#pin-container {
+  height: 400vh;
+  position: relative;
+}
+
+#heading-wrapper {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 
-/* Specific initial settings for animated axes (like starting wght at 100) */
-/* will be handled by JS on first paint by dispatching scroll event. */
-/* Or, we can set them here if preferred, but JS will override on scroll. */
-/* For now, let JS handle the initial animated value setting. */
-
-/* Removed specific #h1-xxx font-variation-settings rules. JS will handle. */
-
-h1#dynamic-heading > span {
-  /* display: inline-block; Not needed for flex items, but individual children can be */
-  /* vertical-align: text-bottom; Not needed for flex items */
+h1#dynamic-heading {
+  margin: 0;
+  padding: 0 0 0 5vw;
+  font-family: "IBM Plex Serif", serif;
+  font-size: 95vh;
+  line-height: 1;
+  font-variation-settings: "wght" 700;
+  font-style: normal;
+  text-transform: uppercase;
+  text-align: left;
+  color: white;
+  white-space: nowrap;
+  will-change: transform;
 }
 
-/* Style for the spinning G */
-#g-great {
-  display: inline-block; /* Crucial for an initial letter that might have specific styling */
-  /* will-change: transform; Removed as transform is now 'none' */
-  /* transform-origin: center center; Removed as transform is now 'none' */
-  /* outline: 1px solid transparent; Removed as it was for transform flickering */
-  /* font-style: normal; Removed to allow inheritance from parent h1 */
+h1#dynamic-heading.is-acronym {
 }
 
-/* Styles for pulsing EARTH elements - Reverted */
-/*
-#initial-e,
-#collapsible-arth {
-  display: inline-block; 
-  will-change: transform; 
-}
-*/
-
-h1 span.collapsible {
-  opacity: 1; /* Start visible */
-  max-width: 500px; /* Start with enough width to be visible, JS will control collapse */
-  margin-right: 0.25em; 
-  /* font-size: 1em; /* JS will control effective font-size relative to parent */
-  /* transition: opacity 0.1s linear, font-size 0.1s linear, max-width 0.1s linear; /* Removed, JS handles */
-  will-change: opacity, font-size, max-width, display; /* Added display */
-  display: inline-block; /* Ensure it's displayed initially */
+#dynamic-heading span {
+  color: white;
+  will-change: transform;
+  display: inline-block;
+  transform-origin: center center;
+  vertical-align: bottom; /* Aligns characters neatly */
 }
 
-/* Remove margin from the last collapsible span to help with overall centering */
-h1#dynamic-heading > span.collapsible:last-child {
+.mega-char, .letter {
+  display: inline-block;
+  vertical-align: bottom; /* Aligns characters neatly */
+}
+
+.mega-word {
+  display: inline-block;
+}
+
+.mega-word:last-of-type {
   margin-right: 0;
 }
 
-/* Removed .collapsible styles */
+/* All animation-related heading styles removed */
+
+#content-after-pin {
+  position: relative;
+  z-index: 2;
+  background-color: hsl(237, 10%, 54%);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
 
 #mega-mission-statement {
-  position: fixed;
-  /* bottom: -100vh; Removed */
-  top: 150vh; /* Start off-screen at the bottom */
-  left: 0;
-  width: 100%;
+  position: relative;
   padding: 20px 15%; /* Top/bottom 20px, Left/right 15% */
   box-sizing: border-box;
   color: white;
   font-family: "IBM Plex Sans", sans-serif; 
-  font-variation-settings: "wdth" 100, "wght" 400;
+  font-variation-settings: "wght" 400;
   font-size: 3em; /* Adjusted from 1.5em */
   line-height: 1.6;
   text-align: left; /* Changed from center to left */
-  opacity: 0; /* Start hidden */
-  transform: translateY(0%); /* Initial transform */
-  will-change: top, opacity, transform; /* Updated will-change */
-  z-index: 5; /* Ensure it's not behind other fixed elements if any */
-  /* overflow: hidden; Removed to test baseline alignment in flex */
+  opacity: 1; /* Start visible */
 }
 
 #mega-mission-statement .mission-mega-highlight {
   /* font-weight: 600; Replaced by font-variation-settings */
   font-style: italic; /* Ensuring italic style */
   font-variation-settings: "wght" 600, "ital" 1, "wdth" 75; /* Changed wdth to 75 */
+}
+
+#projects-section {
+  position: relative;
+  padding: 50px 10%;
+  box-sizing: border-box;
+  margin-top: 5em;
+  opacity: 1;
+  color: white; /* Ensure text is visible */
+}
+
+.project-category {
+  margin-bottom: 5em;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 1em;
+}
+
+.category-title-tagline {
+  /* No special alignment styles needed here. */
+}
+
+.category-symbol {
+  margin-right: 1.5em;
+}
+
+.category-symbol svg {
+  width: 100px;
+  height: 100px;
+}
+
+.category-header h2 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 2.2em;
+  font-variation-settings: "wght" 500;
+  text-transform: uppercase;
+  margin: 0;
+  margin-bottom: 0.25em;
+  line-height: 1;
+}
+
+.tagline {
+  font-size: 1.2em;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  max-width: 65ch;
+  line-height: 1.4;
+  font-variation-settings: "wght" 400;
+  margin-bottom: 1em;
+}
+
+.tagline-group {
+  /* No specific styles needed here for now */
+}
+
+.toggle-description {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  padding: 0.5em 1.5em;
+  margin-top: 1.5em;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 0.9em;
+  font-variation-settings: "wght" 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: background-color 0.2s, color 0.2s;
+  text-decoration: none !important;
+}
+
+.toggle-description:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: hsl(237, 10%, 20%);
+}
+
+.category-description {
+  margin-bottom: 2em;
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 75ch;
+  transition: max-height 0.7s ease-in-out, margin-top 0.7s ease-in-out, opacity 0.5s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-top: 0;
+}
+
+.category-description.expanded {
+  max-height: 1000px; /* Large enough to fit content */
+  opacity: 1;
+  margin-top: 2em;
+}
+
+.projects-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2em;
+  padding-top: 2em;
+}
+
+.project-card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5em;
+}
+
+.project-card.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#project-overlay {
+  position: fixed;
+  z-index: 1000;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  display: flex; /* Using flex to help with content layout */
+  flex-direction: column;
+  background-color: transparent;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#project-overlay.is-visible {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+#project-overlay.is-animating {
+  transition: top 0.5s ease-in-out, left 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+#project-overlay .project-card {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  padding: 2em;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+#project-overlay .toggle-description {
+  position: absolute;
+  top: 0.75em;
+  right: 0.75em;
+  width: 2.5em;
+  height: 2.5em;
+  line-height: 2.5em;
+  padding: 0;
+  margin-top: 0;
+  border-radius: 50%;
+  font-size: 1.5em;
+  font-weight: 300;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* #project-overlay .project-title,
+#project-overlay .category-description,
+#project-overlay .toggle-description {
+  color: hsl(0, 0%, 10%); 
+}
+
+#project-overlay .category-description p {
+  color: hsl(0, 0%, 20%);
+} */
+
+.project-title {
+  font-size: 1.5em;
+  font-variation-settings: "wght" 600;
+  margin: 0 0 0.5em 0;
+  max-height: 100% !important;
+  opacity: 1 !important;
+}
+
+.tagline {
+  font-size: 1.2em;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  max-width: 65ch;
+  line-height: 1.4;
+  font-variation-settings: "wght" 400;
+  margin-bottom: 1em;
+}
+
+.toggle-description {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  padding: 0;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 1em;
+  font-variation-settings: "wght" 500;
+  text-decoration: underline;
+}
+
+#project-overlay .tagline {
+  display: none;
+}
+
+#project-overlay .category-description {
+  max-height: 100% !important;
+  opacity: 1 !important;
+}
+
+.category-description {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 75ch;
 }
 
 /* End Tinos Font Classes */
@@ -123,6 +342,10 @@ h1#dynamic-heading > span.collapsible:last-child {
     font-size: 1.8em; /* Reduce mission statement font size on smaller screens */
     padding: 20px 8%; /* Adjust padding for smaller screens */
     line-height: 1.5; /* Adjust line-height if needed */
+  }
+
+  .category-description.expanded {
+    margin-top: 1.5em;
   }
 }
 
@@ -218,3 +441,26 @@ h1#dynamic-heading > span.collapsible:last-child {
 /* End IBM Plex Serif Classes */
 
 /* Responsive adjustments for mission statement on smaller screens */
+
+body.overlay-open > #main-wrapper {
+  /* filter: blur(8px) brightness(0.6); */ /* No longer needed */
+}
+
+#backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+body.overlay-open #backdrop {
+  opacity: 1;
+}

@@ -39,6 +39,14 @@ body {
   align-items: center;
 }
 
+#heading-wrapper.is-fixed {
+  position: fixed;
+  height: 80px;
+  background-color: transparent;
+  z-index: 10;
+  width: 100%;
+}
+
 h1#dynamic-heading {
   margin: 0;
   padding: 0 0 0 5vw;
@@ -52,6 +60,15 @@ h1#dynamic-heading {
   color: white;
   white-space: nowrap;
   will-change: transform;
+}
+
+h1#dynamic-heading.font-sans {
+  font-family: "IBM Plex Sans", sans-serif;
+  letter-spacing: 0.005em;
+}
+
+h1#dynamic-heading.is-italic {
+  font-style: italic;
 }
 
 h1#dynamic-heading.is-acronym {

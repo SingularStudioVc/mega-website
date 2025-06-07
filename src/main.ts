@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contentAfterPin) {
       const initPinAnimation = () => {
         const headingElement = document.querySelector('#dynamic-heading') as HTMLElement;
+        const headingWrapper = headingElement.parentElement as HTMLElement;
         const wordElements = headingElement.querySelectorAll('.mega-word') as NodeListOf<HTMLElement>;
 
         let centerTranslateX = 0;
@@ -101,6 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let totalLettersWidth = 0;
         let finalCenteringTranslateX = 0;
         let acronymCenterX = 0;
+        const initialLetterSpacing = 0.005; // em, from CSS
+        const finalLetterSpacing = -0.004; // em, for the final acronym state
+        const finalItalicLetterSpacing = 0.01; // em, for when it's sticky and italic
 
         const calculateMetrics = () => {
           // --- 1. Reset styles and remove final state classes ---
@@ -125,26 +129,44 @@ document.addEventListener('DOMContentLoaded', () => {
             const initial = word.querySelector('.mega-char') as HTMLElement;
             if (!initial) return;
             const wordDisplacement = word.offsetLeft - accumulatedInitialWidths;
-            word.dataset.wordDisplacement = String(wordDisplacement);
+            word.dataset.wordDisplacementSerif = String(wordDisplacement);
             accumulatedInitialWidths += initial.offsetWidth;
 
             const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
             letters.forEach(letter => {
                 const displacement = letter.offsetLeft - initial.offsetLeft;
-                letter.dataset.displacement = String(displacement);
+                letter.dataset.displacementSerif = String(displacement);
             });
           });
+
+          // Calculate metrics for sans-serif font
+          headingElement.classList.add('font-sans');
+          accumulatedInitialWidths = 0;
+          wordElements.forEach((word) => {
+            const initial = word.querySelector('.mega-char') as HTMLElement;
+            if (!initial) return;
+            const wordDisplacement = word.offsetLeft - accumulatedInitialWidths;
+            word.dataset.wordDisplacementSans = String(wordDisplacement);
+            accumulatedInitialWidths += initial.offsetWidth;
+
+            const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
+            letters.forEach(letter => {
+                const displacement = letter.offsetLeft - initial.offsetLeft;
+                letter.dataset.displacementSans = String(displacement);
+            });
+          });
+          headingElement.classList.remove('font-sans');
           
           // --- 4. Calculate final state metrics (for Phases 2-4) ---
           headingElement.classList.add('is-acronym'); // Temporarily apply final styles
 
           // Temporarily apply collapse transforms to measure final acronym state
           wordElements.forEach(word => {
-            const wordDisplacement = parseFloat(word.dataset.wordDisplacement || '0');
+            const wordDisplacement = parseFloat(word.dataset.wordDisplacementSerif || '0');
             word.style.transform = `translateX(-${wordDisplacement}px)`;
             const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
             letters.forEach(letter => {
-              const displacement = parseFloat(letter.dataset.displacement || '0');
+              const displacement = parseFloat(letter.dataset.displacementSerif || '0');
               letter.style.transform = `translateX(-${displacement}px)`;
             });
           });
@@ -173,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const finalFontSize = 40;
           finalScale = finalFontSize / initialFontSize;
           
-          finalTranslateY = (20 + (vh * finalScale / 2)) - (vh / 2);
+          finalTranslateY = (20 + (finalFontSize / 2)) - (vh / 2);
 
           // --- 5. Final cleanup ---
           headingElement.classList.remove('is-acronym'); // Remove temporary class
@@ -195,7 +217,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const pinDuration = pinContainerHeight - viewHeight;
 
             if (scrollY >= pinContainerTop && scrollY < pinContainerTop + pinDuration) {
+              if (headingWrapper.classList.contains('is-fixed')) {
+                headingWrapper.classList.remove('is-fixed');
+                (contentAfterPin as HTMLElement).style.paddingTop = '0px';
+                headingElement.classList.remove('is-italic');
+                headingElement.style.letterSpacing = '';
+              }
+
               const progress = (scrollY - pinContainerTop) / pinDuration;
+
+              if (progress >= 0.49) {
+                headingElement.classList.add('font-sans');
+              } else {
+                headingElement.classList.remove('font-sans');
+              }
 
               if (progress >= 0.7) {
                 headingElement.classList.add('is-acronym');
@@ -230,26 +265,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentX = centerTranslateX + (finalCenteringTranslateX - centerTranslateX) * phaseProgress;
                 headingElement.style.transform = `translateX(${currentX}px)`;
                 wordElements.forEach(word => {
-                  const wordDisplacement = parseFloat(word.dataset.wordDisplacement || '0');
+                  const wDispSerif = parseFloat(word.dataset.wordDisplacementSerif || '0');
+                  const wDispSans = parseFloat(word.dataset.wordDisplacementSans || '0');
+                  
+                  const switchPoint = 0.3; // 30% of collapse
+                  const switchDuration = 0.2;
+                  let wordDisplacement = wDispSerif;
+
+                  if (phaseProgress > switchPoint) {
+                    const transitionProgress = Math.min(1, (phaseProgress - switchPoint) / switchDuration);
+                    wordDisplacement = wDispSerif + (wDispSans - wDispSerif) * transitionProgress;
+                  }
+
                   word.style.transform = `translateX(-${wordDisplacement * phaseProgress}px)`;
 
                   const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
                   letters.forEach(letter => {
-                      const displacement = parseFloat(letter.dataset.displacement || '0');
-                      letter.style.transform = `translateX(-${displacement * phaseProgress}px)`;
+                      const lDispSerif = parseFloat(letter.dataset.displacementSerif || '0');
+                      const lDispSans = parseFloat(letter.dataset.displacementSans || '0');
+                      let letterDisplacement = lDispSerif;
+
+                      if (phaseProgress > switchPoint) {
+                        const transitionProgress = Math.min(1, (phaseProgress - switchPoint) / switchDuration);
+                        letterDisplacement = lDispSerif + (lDispSans - lDispSerif) * transitionProgress;
+                      }
+
+                      letter.style.transform = `translateX(-${letterDisplacement * phaseProgress}px)`;
                       letter.style.opacity = String(1 - phaseProgress);
                   });
                 });
-              } else if (progress < 0.8) {
-                  phase = 2.5;
-                   if (currentPhase !== phase) {
-                    currentPhase = phase;
-                    console.log(`Entering Phase ${phase}: Hold`);
-                  }
-                  headingElement.style.transform = `translateX(${finalCenteringTranslateX}px)`;
-              } else if (progress < 0.9) {
+              } else if (progress < 0.8) { // Phase 3: Shrink
                 phase = 3;
-                phaseProgress = (progress - 0.8) / 0.1;
+                phaseProgress = (progress - 0.7) / 0.1;
                 if (currentPhase !== phase) {
                     currentPhase = phase;
                     console.log(`Entering Phase ${phase}: Shrink`);
@@ -257,26 +304,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 const currentScale = 1 - (1 - finalScale) * phaseProgress;
                 headingElement.style.transform = `translateX(${finalCenteringTranslateX}px) scale(${currentScale})`;
-              } else {
+
+                const currentLetterSpacing = initialLetterSpacing + (finalLetterSpacing - initialLetterSpacing) * phaseProgress;
+                headingElement.style.letterSpacing = `${currentLetterSpacing}em`;
+              } else { // Phase 4: Position
                 phase = 4;
-                phaseProgress = (progress - 0.9) / 0.1;
+                phaseProgress = (progress - 0.8) / 0.2;
                 if (currentPhase !== phase) {
                     currentPhase = phase;
                     console.log(`Entering Phase ${phase}: Position`);
                     headingElement.style.transformOrigin = `${acronymCenterX}px center`;
                 }
                 const currentY = finalTranslateY * phaseProgress;
-                headingElement.style.transform = `translateX(${finalCenteringTranslateX}px) scale(${finalScale}) translateY(${currentY}px)`;
+                headingElement.style.transform = `translateY(${currentY}px) translateX(${finalCenteringTranslateX}px) scale(${finalScale})`;
+                headingElement.style.letterSpacing = `${finalLetterSpacing}em`;
               }
 
               requestAnimationFrame(() => {
                 if (progress >= 0.7) {
                   wordElements.forEach(word => {
-                    const wordDisplacement = parseFloat(word.dataset.wordDisplacement || '0');
+                    const wordDisplacement = parseFloat(word.dataset.wordDisplacementSans || '0');
                     word.style.transform = `translateX(-${wordDisplacement}px)`;
                     const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
                     letters.forEach(letter => {
-                      const displacement = parseFloat(letter.dataset.displacement || '0');
+                      const displacement = parseFloat(letter.dataset.displacementSans || '0');
                       letter.style.transform = `translateX(-${displacement}px)`;
                       letter.style.opacity = '0';
                     });
@@ -294,18 +345,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (progress < 1) {
                     (contentAfterPin as HTMLElement).style.opacity = '0';
                 } else {
+                    headingWrapper.classList.add('is-fixed');
+                    (contentAfterPin as HTMLElement).style.paddingTop = `${headingWrapper.getBoundingClientRect().height}px`;
                     (contentAfterPin as HTMLElement).style.opacity = '1';
+                    headingElement.classList.add('is-italic');
+                    headingElement.style.letterSpacing = `${finalItalicLetterSpacing}em`;
                 }
               });
             } else if (scrollY < pinContainerTop) {
                 if (currentPhase !== 0) {
                     currentPhase = 0;
                     console.log("Before animation starts");
+                    if (headingWrapper.classList.contains('is-fixed')) {
+                      headingWrapper.classList.remove('is-fixed');
+                      (contentAfterPin as HTMLElement).style.paddingTop = '0px';
+                      headingElement.classList.remove('is-italic');
+                    }
                     headingElement.style.transformOrigin = '';
                 }
               requestAnimationFrame(() => {
                 headingElement.classList.remove('is-acronym');
                 headingElement.style.transform = 'translateX(0px)';
+                headingElement.classList.remove('font-sans');
+                headingElement.classList.remove('is-italic');
+                headingElement.style.letterSpacing = '';
                 wordElements.forEach(word => {
                     word.style.transform = 'translateX(0px)';
                     const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
@@ -320,17 +383,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (currentPhase !== 5) {
                     currentPhase = 5;
                     console.log("Animation finished");
+                    if (!headingWrapper.classList.contains('is-fixed')) {
+                      headingWrapper.classList.add('is-fixed');
+                      (contentAfterPin as HTMLElement).style.paddingTop = `${headingWrapper.getBoundingClientRect().height}px`;
+                    }
                 }
               requestAnimationFrame(() => {
                 headingElement.classList.add('is-acronym');
+                headingElement.classList.add('font-sans');
+                headingElement.classList.add('is-italic');
                 headingElement.style.transformOrigin = `${acronymCenterX}px center`;
-                headingElement.style.transform = `translateX(${finalCenteringTranslateX}px) scale(${finalScale}) translateY(${finalTranslateY}px)`;
+                headingElement.style.transform = `translateX(${finalCenteringTranslateX}px) scale(${finalScale})`;
+                headingElement.style.letterSpacing = `${finalItalicLetterSpacing}em`;
                 wordElements.forEach(word => {
-                    const wordDisplacement = parseFloat(word.dataset.wordDisplacement || '0');
+                    const wordDisplacement = parseFloat(word.dataset.wordDisplacementSans || '0');
                     word.style.transform = `translateX(-${wordDisplacement}px)`;
                     const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
                     letters.forEach(letter => {
-                        const displacement = parseFloat(letter.dataset.displacement || '0');
+                        const displacement = parseFloat(letter.dataset.displacementSans || '0');
                         letter.style.transform = `translateX(-${displacement}px)`;
                         letter.style.opacity = '0';
                     });

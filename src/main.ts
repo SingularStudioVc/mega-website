@@ -89,8 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const pinContainer = document.getElementById('pin-container');
   if (pinContainer) {
     const contentAfterPin = document.getElementById('content-after-pin');
+    const mainWrapper = document.getElementById('main-wrapper');
 
-    if (contentAfterPin) {
+    if (contentAfterPin && mainWrapper) {
       const initPinAnimation = () => {
         const headingElement = document.querySelector('#dynamic-heading') as HTMLElement;
         const headingWrapper = headingElement.parentElement as HTMLElement;
@@ -226,6 +227,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
               const progress = (scrollY - pinContainerTop) / pinDuration;
 
+              const startH = 237, endH = 210;
+              const startS = 10, endS = 100;
+              const startL = 54, endL = 10;
+              
+              const currentH = startH + (endH - startH) * progress;
+              const currentS = startS + (endS - startS) * progress;
+              const currentL = startL + (endL - startL) * progress;
+
+              mainWrapper.style.backgroundColor = `hsl(${currentH}, ${currentS}%, ${currentL}%)`;
+
               if (progress >= 0.49) {
                 headingElement.classList.add('font-sans');
               } else {
@@ -292,6 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                       letter.style.transform = `translateX(-${letterDisplacement * phaseProgress}px)`;
                       letter.style.opacity = String(1 - phaseProgress);
+                      const blurAmount = phaseProgress * 8; // Max blur of 8px
+                      letter.style.filter = `blur(${blurAmount}px)`;
                   });
                 });
               } else if (progress < 0.8) { // Phase 3: Shrink
@@ -330,6 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
                       const displacement = parseFloat(letter.dataset.displacementSans || '0');
                       letter.style.transform = `translateX(-${displacement}px)`;
                       letter.style.opacity = '0';
+                      letter.style.filter = 'none';
                     });
                   });
                 } else if (progress < 0.4) {
@@ -339,6 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         letters.forEach(letter => {
                             letter.style.transform = 'translateX(0px)';
                             letter.style.opacity = '1';
+                            letter.style.filter = 'none';
                         });
                     });
                 }
@@ -364,6 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     headingElement.style.transformOrigin = '';
                 }
               requestAnimationFrame(() => {
+                mainWrapper.style.backgroundColor = `hsl(237, 10%, 54%)`;
                 headingElement.classList.remove('is-acronym');
                 headingElement.style.transform = 'translateX(0px)';
                 headingElement.classList.remove('font-sans');
@@ -375,6 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     letters.forEach(letter => {
                         letter.style.transform = 'translateX(0px)';
                         letter.style.opacity = '1';
+                        letter.style.filter = 'none';
                     });
                   });
                 (contentAfterPin as HTMLElement).style.opacity = '0';
@@ -403,8 +420,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         const displacement = parseFloat(letter.dataset.displacementSans || '0');
                         letter.style.transform = `translateX(-${displacement}px)`;
                         letter.style.opacity = '0';
+                        letter.style.filter = 'none';
                     });
                   });
+                mainWrapper.style.backgroundColor = `hsl(210, 100%, 10%)`;
                 (contentAfterPin as HTMLElement).style.opacity = '1';
               });
             }
@@ -413,5 +432,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.fonts.ready.then(initPinAnimation);
     }
+  }
+
+  const missionStatement = document.getElementById('mega-mission-statement');
+  const projectsSection = document.getElementById('projects-section');
+
+  if (missionStatement && projectsSection) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const missionTop = entry.boundingClientRect.top;
+          const viewportHeight = window.innerHeight;
+
+          if (entry.isIntersecting) {
+            // When mission statement is in view
+            if (missionTop < viewportHeight * 0.5) {
+              projectsSection.classList.add('visible');
+            } else {
+              projectsSection.classList.remove('visible');
+            }
+          } else if (missionTop < 0) {
+            // When mission statement is scrolled past (above viewport)
+            projectsSection.classList.add('visible');
+          } else {
+            // When mission statement is below viewport
+            projectsSection.classList.remove('visible');
+          }
+        });
+      },
+      {
+        threshold: Array.from({ length: 21 }, (_, i) => i * 0.05),
+      }
+    );
+    observer.observe(missionStatement);
   }
 });

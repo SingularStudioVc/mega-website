@@ -100,7 +100,7 @@ h1#dynamic-heading.is-acronym {
 #content-after-pin {
   position: relative;
   z-index: 2;
-  background-color: hsl(237, 10%, 54%);
+  background-color: transparent;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }
@@ -129,8 +129,13 @@ h1#dynamic-heading.is-acronym {
   padding: 50px 10%;
   box-sizing: border-box;
   margin-top: 5em;
-  opacity: 1;
+  opacity: 0;
   color: white; /* Ensure text is visible */
+  transition: opacity 0.8s ease-in-out;
+}
+
+#projects-section.visible {
+  opacity: 1;
 }
 
 .project-category {

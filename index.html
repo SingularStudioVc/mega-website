@@ -21,14 +21,16 @@
               <span class="mega-word"><span class="mega-char">M</span><span class="letter">a</span><span class="letter">k</span><span class="letter">e</span></span>
               <span class="mega-word"><span class="mega-char">E</span><span class="letter">a</span><span class="letter">r</span><span class="letter">t</span><span class="letter">h</span></span>
               <span class="mega-word"><span class="mega-char">G</span><span class="letter">r</span><span class="letter">e</span><span class="letter">a</span><span class="letter">t</span></span>
-              <span class="mega-word"><span class="mega-char">A</span><span class="letter">g</span><span class="letter">a</span><span class="letter">i</span><span class="letter">n</span></span>
+              <span class="mega-word"><span class="mega-char">A</span><span class="letter">g</span><span class="letter">i</span><span class="letter">n</span></span>
             </span>
           </h1>
         </div>
       </div>
       <div id="content-after-pin">
-        <div id="mega-mission-statement">
-          <span class="mission-mega-highlight">MEGA</span> is a nonprofit initiative dedicated to accelerating high-impact, sustainable technological innovations that restore, protect, and advance Earth's ecosystems and global human prosperity.
+        <div id="mission-wrapper">
+            <div id="mega-mission-statement">
+              <span class="mission-mega-highlight">MEGA</span> is a nonprofit initiative dedicated to accelerating high-impact, resource-conscious technological innovations that restore, protect, and advance Earth's ecosystems and global human prosperity.
+            </div>
         </div>
         <section id="projects-section">
           <div class="project-category">
@@ -36,16 +38,16 @@
               <div class="category-symbol">
                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                   <!-- Outer frame -->
-                  <rect x="5" y="5" width="90" height="90" fill="none" stroke="white" stroke-width="6"/>
+                  <rect x="5" y="5" width="90" height="90" fill="none" stroke-width="6"/>
 
                   <!-- Left branch from top-left corner -->
-                  <polygon points="5,5 9,5 54,55 46,55" fill="white"/>
+                  <polygon points="5,5 9,5 54,55 46,55"/>
 
                   <!-- Right branch from top-right corner -->
-                  <polygon points="95,5 91,5 46,55 54,55" fill="white"/>
+                  <polygon points="95,5 91,5 46,55 54,55"/>
 
                   <!-- Spine with tapered top, straight bottom -->
-                  <polygon points="46,55 54,55 54,95 46,95" fill="white"/>
+                  <polygon points="46,55 54,55 54,95 46,95"/>
                 </svg>
               </div>
               <h2>Unite</h2>
@@ -67,20 +69,24 @@
           <div class="project-category">
             <div class="category-header">
               <div class="category-symbol">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M12 2L12 22" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M2 12H22" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M12 2C14.5013 4.47153 15.8356 7.86313 16 11.5M12 2C9.49872 4.47153 8.16438 7.86313 8 11.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M12 22C14.5013 19.5285 15.8356 16.1369 16 12.5M12 22C9.49872 19.5285 8.16438 16.1369 8 12.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M2 12C4.47153 9.49872 7.86313 8.16438 11.5 8M2 12C4.47153 14.5013 7.86313 15.8356 11.5 16" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M22 12C19.5285 9.49872 16.1369 8.16438 12.5 8M22 12C19.5285 14.5013 16.1369 15.8356 12.5 16" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg viewBox="0 0 36 36" fill="none" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Square border -->
+                  <rect x="1" y="1" width="34" height="34" stroke="white" stroke-width="2" fill="none" />
+                  <!-- Shield with bottom close to bottom border -->
+                  <path d="M5 8 L31 8 C31 34, 5 34, 5 8 Z" />
                 </svg>
               </div>
-              <h2>Protection</h2>
+              <h2>Protect</h2>
             </div>
             <div class="projects-list">
-              <div class="project-card"></div>
+              <div class="project-card">
+                <h3 class="project-title">Project Vitesse</h3>
+                <p class="tagline">Save lives, infrastructure-free.</p>
+                <button class="toggle-description">Learn more &rarr;</button>
+                <div class="category-description">
+                  <p>Project Vitesse empowers cities to enhance road safety by transforming existing urban CCTV cameras into intelligent speed radars — all without adding physical infrastructure. Leveraging advanced 3D reconstruction, camera calibration, and computer vision, it provides accurate, real-time vehicle speed data at scale. By maximizing current resources, Project Vitesse advances MEGA's commitment to sustainable, impactful technologies that protect communities</p>
+                </div>
+              </div>
               <div class="project-card"></div>
               <div class="project-card"></div>
             </div>
@@ -88,13 +94,24 @@
           <div class="project-category">
             <div class="category-header">
               <div class="category-symbol">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1" y="1" width="34" height="34" stroke="white" stroke-width="2"/>
+                  <polygon points="9,28 9,11 22,11.5 22,12.5 11,13 11,28" fill="white"/>
+                  <polygon points="22,10 28,12 22,14" fill="white"/>
+                </svg>
               </div>
-              <h2>Restoration</h2>
+              <h2>Restore</h2>
             </div>
             <div class="projects-list">
-              <div class="project-card"></div>
-              <div class="project-card"></div>
+              <div class="project-card">
+                <h3 class="project-title">Project Plastic</h3>
+                <p class="tagline">Cleaning the ocean, without harming its life.</p>
+                <button class="toggle-description">Learn more &rarr;</button>
+                <div class="category-description">
+                  <p>Project Plastic is a marine cleanup initiative designed to remove plastic waste from the ocean with minimal disruption to marine ecosystems. It uses a vortex-based collection system that mimics natural currents to guide debris into a capture zone—no nets, no entanglement risk. A grace window before surface skimming allows marine life to escape safely, while a network of subsurface sensors and aerial drones monitor the operation in real time to further prevent bycatch.</p>
+                  <p>Unlike conventional cleanup methods, this system operates with low energy and without invasive infrastructure, offering a scalable, sustainable solution to one of Earth's most persistent environmental challenges.</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="project-category">

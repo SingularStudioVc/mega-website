@@ -128,14 +128,8 @@ h1#dynamic-heading.is-acronym {
   position: relative;
   padding: 50px 10%;
   box-sizing: border-box;
-  margin-top: 5em;
-  opacity: 0;
+  margin-top: 50vh; /* Increased from 25vh */
   color: white; /* Ensure text is visible */
-  transition: opacity 0.8s ease-in-out;
-}
-
-#projects-section.visible {
-  opacity: 1;
 }
 
 .project-category {
@@ -161,6 +155,17 @@ h1#dynamic-heading.is-acronym {
 .category-symbol svg {
   width: 100px;
   height: 100px;
+}
+
+.project-category .category-symbol svg rect,
+.project-category .category-symbol svg path {
+  stroke: white;
+  fill: none;
+}
+
+.project-category .category-symbol svg polygon {
+  stroke: none;
+  fill: white;
 }
 
 .category-header h2 {

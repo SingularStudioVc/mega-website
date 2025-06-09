@@ -90,8 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (pinContainer) {
     const contentAfterPin = document.getElementById('content-after-pin');
     const mainWrapper = document.getElementById('main-wrapper');
+    const missionWrapper = document.getElementById('mission-wrapper');
 
-    if (contentAfterPin && mainWrapper) {
+    if (contentAfterPin && mainWrapper && missionWrapper) {
       const initPinAnimation = () => {
         const headingElement = document.querySelector('#dynamic-heading') as HTMLElement;
         const headingWrapper = headingElement.parentElement as HTMLElement;
@@ -331,6 +332,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentY = finalTranslateY * phaseProgress;
                 headingElement.style.transform = `translateY(${currentY}px) translateX(${finalCenteringTranslateX}px) scale(${finalScale})`;
                 headingElement.style.letterSpacing = `${finalLetterSpacing}em`;
+
+                const missionProgress = Math.min(1, phaseProgress / 0.8);
+                missionWrapper.style.opacity = String(missionProgress);
+                const missionTranslateY = 50 * (1 - missionProgress);
+                missionWrapper.style.transform = `translateY(${missionTranslateY}vh)`;
               }
 
               requestAnimationFrame(() => {
@@ -359,10 +365,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 if (progress < 1) {
                     (contentAfterPin as HTMLElement).style.opacity = '0';
+                    missionWrapper.classList.remove('visible');
                 } else {
                     headingWrapper.classList.add('is-fixed');
                     (contentAfterPin as HTMLElement).style.paddingTop = `${headingWrapper.getBoundingClientRect().height}px`;
-                    (contentAfterPin as HTMLElement).style.opacity = '1';
+                    missionWrapper.classList.add('visible');
                     headingElement.classList.add('is-italic');
                     headingElement.style.letterSpacing = `${finalItalicLetterSpacing}em`;
                 }
@@ -380,6 +387,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
               requestAnimationFrame(() => {
                 mainWrapper.style.backgroundColor = `hsl(237, 10%, 54%)`;
+                missionWrapper.classList.remove('visible');
                 headingElement.classList.remove('is-acronym');
                 headingElement.style.transform = 'translateX(0px)';
                 headingElement.classList.remove('font-sans');
@@ -425,6 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   });
                 mainWrapper.style.backgroundColor = `hsl(210, 100%, 10%)`;
                 (contentAfterPin as HTMLElement).style.opacity = '1';
+                missionWrapper.classList.add('visible');
               });
             }
         }, { passive: true });
@@ -432,38 +441,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.fonts.ready.then(initPinAnimation);
     }
-  }
-
-  const missionStatement = document.getElementById('mega-mission-statement');
-  const projectsSection = document.getElementById('projects-section');
-
-  if (missionStatement && projectsSection) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const missionTop = entry.boundingClientRect.top;
-          const viewportHeight = window.innerHeight;
-
-          if (entry.isIntersecting) {
-            // When mission statement is in view
-            if (missionTop < viewportHeight * 0.5) {
-              projectsSection.classList.add('visible');
-            } else {
-              projectsSection.classList.remove('visible');
-            }
-          } else if (missionTop < 0) {
-            // When mission statement is scrolled past (above viewport)
-            projectsSection.classList.add('visible');
-          } else {
-            // When mission statement is below viewport
-            projectsSection.classList.remove('visible');
-          }
-        });
-      },
-      {
-        threshold: Array.from({ length: 21 }, (_, i) => i * 0.05),
-      }
-    );
-    observer.observe(missionStatement);
   }
 });

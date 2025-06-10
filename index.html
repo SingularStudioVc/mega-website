@@ -21,17 +21,20 @@
               <span class="mega-word"><span class="mega-char">M</span><span class="letter">a</span><span class="letter">k</span><span class="letter">e</span></span>
               <span class="mega-word"><span class="mega-char">E</span><span class="letter">a</span><span class="letter">r</span><span class="letter">t</span><span class="letter">h</span></span>
               <span class="mega-word"><span class="mega-char">G</span><span class="letter">r</span><span class="letter">e</span><span class="letter">a</span><span class="letter">t</span></span>
-              <span class="mega-word"><span class="mega-char">A</span><span class="letter">g</span><span class="letter">i</span><span class="letter">n</span></span>
+              <span class="mega-word"><span class="mega-char">A</span><span class="letter">g</span><span class="letter">a</span><span class="letter">i</span><span class="letter">n</span></span>
             </span>
           </h1>
+          <div id="lang-toggle">
+            <span class="lang-option active" data-lang="en">EN</span>
+            <span class="lang-separator">/</span>
+            <span class="lang-option" data-lang="fr">FR</span>
+          </div>
+        </div>
+        <div id="mission-wrapper">
+            <div id="mega-mission-statement" data-key="missionStatement"></div>
         </div>
       </div>
       <div id="content-after-pin">
-        <div id="mission-wrapper">
-            <div id="mega-mission-statement">
-              <span class="mission-mega-highlight">MEGA</span> is a nonprofit initiative dedicated to accelerating high-impact, resource-conscious technological innovations that restore, protect, and advance Earth's ecosystems and global human prosperity.
-            </div>
-        </div>
         <section id="projects-section">
           <div class="project-category">
             <div class="category-header">
@@ -50,19 +53,14 @@
                   <polygon points="46,55 54,55 54,95 46,95"/>
                 </svg>
               </div>
-              <h2>Unite</h2>
+              <h2 data-key="unite"></h2>
             </div>
             <div class="projects-list">
               <div class="project-card">
-                <h3 class="project-title">Project Y</h3>
-                <p class="tagline">AI-orchestrated modular super-app fusing user context and services into one continuous, intelligent ecosystem.</p>
-                <button class="toggle-description">Learn more &rarr;</button>
-                <div class="category-description">
-                  <p>Project Y is the creation of an LLM-native operating environment designed as a modular, AI-orchestrated super-app. While large language models (LLMs) are often used today mainly for conversation, this represents only a fraction of their true intelligence. The real value lies in their ability to understand complex user context and execute meaningful actions based on that understanding — a capability often restrained by current applications. Project Y addresses this by leveraging cutting-edge infrastructure protocols like MCP to unlock this deeper potential.</p>
-                  <p>Rather than launching a monolithic all-in-one app, Y is built block by block. Each block represents a distinct service, all connected through a central AI capable of real-time context reasoning and seamless cross-block orchestration. Powered by this intelligent core, Y unifies fragmented services by fusing user context and modular capabilities into one continuous, intelligent ecosystem.</p>
-                  <p>As new modules are added, data sharing unlocks richer experiences, enabling third-party integrations and laying the foundation for a new generation of LLM-OS powered applications.</p>
-                  <p>More than just a product, Project Y connects the dots of MEGA's long-term vision by integrating human and technological efforts in virtuous partnership.</p>
-                </div>
+                <h3 class="project-title" data-key="projectYTitle"></h3>
+                <p class="tagline" data-key="projectYTagline"></p>
+                <button class="toggle-description" data-key="learnMore"></button>
+                <div class="category-description" data-key="projectYDesc"></div>
               </div>
             </div>
           </div>
@@ -76,19 +74,21 @@
                   <path d="M5 8 L31 8 C31 34, 5 34, 5 8 Z" />
                 </svg>
               </div>
-              <h2>Protect</h2>
+              <h2 data-key="protect"></h2>
             </div>
             <div class="projects-list">
               <div class="project-card">
-                <h3 class="project-title">Project Vitesse</h3>
-                <p class="tagline">Save lives, infrastructure-free.</p>
-                <button class="toggle-description">Learn more &rarr;</button>
-                <div class="category-description">
-                  <p>Project Vitesse empowers cities to enhance road safety by transforming existing urban CCTV cameras into intelligent speed radars — all without adding physical infrastructure. Leveraging advanced 3D reconstruction, camera calibration, and computer vision, it provides accurate, real-time vehicle speed data at scale. By maximizing current resources, Project Vitesse advances MEGA's commitment to sustainable, impactful technologies that protect communities</p>
-                </div>
+                <h3 class="project-title" data-key="projectVitesseTitle"></h3>
+                <p class="tagline" data-key="projectVitesseTagline"></p>
+                <button class="toggle-description" data-key="learnMore"></button>
+                <div class="category-description" data-key="projectVitesseDesc"></div>
               </div>
-              <div class="project-card"></div>
-              <div class="project-card"></div>
+              <div class="project-card">
+                <h3 class="project-title" data-key="projectMegafeuTitle"></h3>
+                <p class="tagline" data-key="projectMegafeuTagline"></p>
+                <button class="toggle-description" data-key="learnMore"></button>
+                <div class="category-description" data-key="projectMegafeuDesc"></div>
+              </div>
             </div>
           </div>
           <div class="project-category">
@@ -100,32 +100,64 @@
                   <polygon points="22,10 28,12 22,14" fill="white"/>
                 </svg>
               </div>
-              <h2>Restore</h2>
+              <h2 data-key="restore"></h2>
             </div>
             <div class="projects-list">
               <div class="project-card">
-                <h3 class="project-title">Project Plastic</h3>
-                <p class="tagline">Cleaning the ocean, without harming its life.</p>
-                <button class="toggle-description">Learn more &rarr;</button>
-                <div class="category-description">
-                  <p>Project Plastic is a marine cleanup initiative designed to remove plastic waste from the ocean with minimal disruption to marine ecosystems. It uses a vortex-based collection system that mimics natural currents to guide debris into a capture zone—no nets, no entanglement risk. A grace window before surface skimming allows marine life to escape safely, while a network of subsurface sensors and aerial drones monitor the operation in real time to further prevent bycatch.</p>
-                  <p>Unlike conventional cleanup methods, this system operates with low energy and without invasive infrastructure, offering a scalable, sustainable solution to one of Earth's most persistent environmental challenges.</p>
-                </div>
+                <h3 class="project-title" data-key="projectPlasticTitle"></h3>
+                <p class="tagline" data-key="projectPlasticTagline"></p>
+                <button class="toggle-description" data-key="learnMore"></button>
+                <div class="category-description" data-key="projectPlasticDesc"></div>
               </div>
             </div>
           </div>
           <div class="project-category">
             <div class="category-header">
               <div class="category-symbol">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1" y="1" width="34" height="34" stroke="white" stroke-width="2"/>
+                  <g stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 26V18" />
+                    <path d="M18 18C18 13, 13 10, 10 10C10 13, 13 18, 18 18Z" />
+                    <path d="M18 18C18 13, 23 10, 26 10C26 13, 23 18, 18 18Z" />
+                  </g>
+                </svg>
               </div>
-              <h2>Advancement</h2>
+              <h2 data-key="feed"></h2>
             </div>
             <div class="projects-list">
-              <div class="project-card"></div>
+              <div class="project-card">
+                <h3 class="project-title" data-key="projetRacineTitle"></h3>
+                <p class="tagline" data-key="projetRacineTagline"></p>
+                <button class="toggle-description" data-key="learnMore"></button>
+                <div class="category-description" data-key="projetRacineDesc"></div>
+              </div>
+            </div>
+          </div>
+          <div class="project-category">
+            <div class="category-header">
+              <div class="category-symbol">
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="1" y="1" width="34" height="34" stroke="white" stroke-width="2"/>
+                  <polygon points="14,9 14,13 24,18" fill="white"/>
+                  <polygon points="14,27 14,23 24,18" fill="white"/>
+                </svg>
+              </div>
+              <h2 data-key="shift"></h2>
+            </div>
+            <div class="projects-list">
+              <div class="project-card">
+                <h3 class="project-title" data-key="projectGoggoTitle"></h3>
+                <p class="tagline" data-key="projectGoggoTagline"></p>
+                <button class="toggle-description" data-key="learnMore"></button>
+                <div class="category-description" data-key="projectGoggoDesc"></div>
+              </div>
             </div>
           </div>
         </section>
+        <footer id="contact-footer">
+          <a href="mailto:nicolas@ho-mo.xyz" data-key="contact"></a>
+        </footer>
       </div>
       <div id="backdrop"></div>
       <div id="project-overlay"></div>

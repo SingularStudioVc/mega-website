@@ -105,6 +105,19 @@ h1#dynamic-heading.is-acronym {
   transition: opacity 0.5s ease-in-out;
 }
 
+#mission-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 1; /* Sits behind the header text but above the background */
+  opacity: 0;
+  pointer-events: none; /* So it doesn't block interactions */
+}
+
 #mega-mission-statement {
   position: relative;
   padding: 20px 15%; /* Top/bottom 20px, Left/right 15% */
@@ -115,7 +128,6 @@ h1#dynamic-heading.is-acronym {
   font-size: 3em; /* Adjusted from 1.5em */
   line-height: 1.6;
   text-align: left; /* Changed from center to left */
-  opacity: 1; /* Start visible */
 }
 
 #mega-mission-statement .mission-mega-highlight {
@@ -124,11 +136,14 @@ h1#dynamic-heading.is-acronym {
   font-variation-settings: "wght" 600, "ital" 1, "wdth" 75; /* Changed wdth to 75 */
 }
 
+#mega-mission-statement .mission-bold {
+  font-variation-settings: "wght" 600;
+}
+
 #projects-section {
   position: relative;
   padding: 50px 10%;
   box-sizing: border-box;
-  margin-top: 50vh; /* Increased from 25vh */
   color: white; /* Ensure text is visible */
 }
 
@@ -244,6 +259,13 @@ h1#dynamic-heading.is-acronym {
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.5em;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.project-card:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .project-card.is-hidden {
@@ -346,8 +368,11 @@ h1#dynamic-heading.is-acronym {
 }
 
 #project-overlay .category-description {
-  max-height: 100% !important;
-  opacity: 1 !important;
+  max-height: none;
+  opacity: 1;
+  overflow: visible;
+  pointer-events: auto;
+  margin-top: 2em;
 }
 
 .category-description {
@@ -490,4 +515,63 @@ body.overlay-open > #main-wrapper {
 
 body.overlay-open #backdrop {
   opacity: 1;
+  pointer-events: auto;
+}
+
+#contact-footer {
+  padding: 5em 0;
+  text-align: center;
+}
+
+#contact-footer a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 0.25em;
+  transition: color 0.2s, border-color 0.2s;
+  font-size: 1.2em;
+}
+
+#contact-footer a:hover {
+  color: white;
+  border-color: white;
+}
+
+#lang-toggle {
+  position: absolute;
+  top: 50%;
+  right: 5vw;
+  transform: translateY(-50%);
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 1em;
+  font-variation-settings: "wght" 400;
+  color: white;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#heading-wrapper.is-fixed #lang-toggle {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#lang-toggle .lang-option {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+#lang-toggle .lang-option.active {
+  opacity: 1;
+  font-variation-settings: "wght" 600;
+}
+
+#lang-toggle .lang-option:not(.active):hover {
+  opacity: 1;
+}
+
+#lang-toggle .lang-separator {
+  margin: 0 0.5em;
+  opacity: 0.6;
 }

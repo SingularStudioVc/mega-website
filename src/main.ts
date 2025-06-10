@@ -1,14 +1,18 @@
+import { translations } from './localization';
+
+type TranslationKey = keyof typeof translations['en'];
+
 document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById('project-overlay');
   if (!overlay) return;
 
   let activeCard: HTMLElement | null = null;
 
-  document.querySelectorAll('.toggle-description').forEach(button => {
-    button.addEventListener('click', (e) => {
+  document.querySelectorAll('.project-card').forEach(cardElement => {
+    const card = cardElement as HTMLElement;
+    card.addEventListener('click', (e) => {
       e.stopPropagation();
-      const card = (e.target as HTMLElement).closest('.project-card') as HTMLElement;
-      if (!card) return;
+      if (overlay.classList.contains('is-visible')) return;
 
       activeCard = card;
       const cardRect = card.getBoundingClientRect();
@@ -52,6 +56,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const langToggle = document.getElementById('lang-toggle');
+  const langOptions = langToggle?.querySelectorAll('.lang-option');
+  const translatableElements = document.querySelectorAll('[data-key]');
+
+  const setLanguage = (lang: 'en' | 'fr') => {
+    translatableElements.forEach(element => {
+      const key = element.getAttribute('data-key') as TranslationKey;
+      if (key && translations[lang][key]) {
+        element.innerHTML = translations[lang][key];
+      }
+    });
+
+    langOptions?.forEach(option => {
+      if (option.getAttribute('data-lang') === lang) {
+        option.classList.add('active');
+      } else {
+        option.classList.remove('active');
+      }
+    });
+    
+    document.documentElement.lang = lang;
+  };
+
+  langOptions?.forEach(option => {
+    option.addEventListener('click', (e) => {
+      const lang = (e.target as HTMLElement).getAttribute('data-lang') as 'en' | 'fr';
+      if (lang) {
+        setLanguage(lang);
+      }
+    });
+  });
+
   function closeOverlay(overlay: HTMLElement) {
     if (!activeCard) return;
 
@@ -82,6 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) closeOverlay(overlay);
   });
+  
+  const backdrop = document.getElementById('backdrop');
+  backdrop?.addEventListener('click', () => {
+    if (activeCard) closeOverlay(overlay);
+  });
+  
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && activeCard) closeOverlay(overlay);
   });
@@ -134,10 +176,25 @@ document.addEventListener('DOMContentLoaded', () => {
             word.dataset.wordDisplacementSerif = String(wordDisplacement);
             accumulatedInitialWidths += initial.offsetWidth;
 
+            // Debug: log all words being processed
+            console.log('Processing word (serif):', word.textContent, 'displacement:', wordDisplacement);
+
             const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
             letters.forEach(letter => {
                 const displacement = letter.offsetLeft - initial.offsetLeft;
                 letter.dataset.displacementSerif = String(displacement);
+                
+                // Debug logging for AGAIN word
+                const wordText = word.textContent || '';
+                if (wordText.includes('A') && wordText.includes('gain')) {
+                  console.log('AGAIN word debug (serif):', {
+                    wordText: wordText,
+                    letter: letter.textContent,
+                    displacement: displacement,
+                    offsetLeft: letter.offsetLeft,
+                    initialOffsetLeft: initial.offsetLeft
+                  });
+                }
             });
           });
 
@@ -155,6 +212,18 @@ document.addEventListener('DOMContentLoaded', () => {
             letters.forEach(letter => {
                 const displacement = letter.offsetLeft - initial.offsetLeft;
                 letter.dataset.displacementSans = String(displacement);
+                
+                // Debug logging for AGAIN word (sans-serif)
+                const wordText = word.textContent || '';
+                if (wordText.includes('A') && wordText.includes('gain')) {
+                  console.log('AGAIN word debug (sans-serif):', {
+                    wordText: wordText,
+                    letter: letter.textContent,
+                    displacement: displacement,
+                    offsetLeft: letter.offsetLeft,
+                    initialOffsetLeft: initial.offsetLeft
+                  });
+                }
             });
           });
           headingElement.classList.remove('font-sans');
@@ -228,9 +297,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
               const progress = (scrollY - pinContainerTop) / pinDuration;
 
-              const startH = 237, endH = 210;
-              const startS = 10, endS = 100;
-              const startL = 54, endL = 10;
+              const startH = 237, endH = 234;
+              const startS = 10, endS = 99;
+              const startL = 54, endL = 43;
               
               const currentH = startH + (endH - startH) * progress;
               const currentS = startS + (endS - startS) * progress;
@@ -333,10 +402,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 headingElement.style.transform = `translateY(${currentY}px) translateX(${finalCenteringTranslateX}px) scale(${finalScale})`;
                 headingElement.style.letterSpacing = `${finalLetterSpacing}em`;
 
-                const missionProgress = Math.min(1, phaseProgress / 0.8);
-                missionWrapper.style.opacity = String(missionProgress);
-                const missionTranslateY = 50 * (1 - missionProgress);
-                missionWrapper.style.transform = `translateY(${missionTranslateY}vh)`;
+                // Mission statement appears immediately when MEGA starts moving up
+                const missionFadeStart = 0; // Start fading in at the beginning of the phase
+                const missionOpacity = phaseProgress > missionFadeStart ? 
+                  (phaseProgress - missionFadeStart) / (1 - missionFadeStart) : 0;
+                
+                // Calculate mission position: starts at bottom, moves to center as acronym moves to top
+                const missionStartY = window.innerHeight; // Start below viewport
+                const missionEndY = window.innerHeight / 2; // End at center of screen
+                const missionCurrentY = missionStartY + (missionEndY - missionStartY) * phaseProgress;
+                
+                missionWrapper.style.transform = `translateY(${missionCurrentY}px)`;
+                missionWrapper.style.opacity = String(missionOpacity);
+                missionWrapper.style.pointerEvents = missionOpacity > 0 ? 'auto' : 'none';
+
+                // Start showing project section when mission statement reaches 60% of screen height
+                const missionProgressToCenter = (missionCurrentY - missionStartY) / (missionEndY - missionStartY);
+                const projectSectionOpacity = missionProgressToCenter > 0.6 ? 
+                  (missionProgressToCenter - 0.6) / 0.4 : 0; // Fade in from 60% to 100%
+                (contentAfterPin as HTMLElement).style.opacity = String(projectSectionOpacity);
               }
 
               requestAnimationFrame(() => {
@@ -363,13 +447,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     });
                 }
-                if (progress < 1) {
-                    (contentAfterPin as HTMLElement).style.opacity = '0';
-                    missionWrapper.classList.remove('visible');
-                } else {
+                if (progress >= 1) {
                     headingWrapper.classList.add('is-fixed');
                     (contentAfterPin as HTMLElement).style.paddingTop = `${headingWrapper.getBoundingClientRect().height}px`;
-                    missionWrapper.classList.add('visible');
                     headingElement.classList.add('is-italic');
                     headingElement.style.letterSpacing = `${finalItalicLetterSpacing}em`;
                 }
@@ -387,7 +467,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
               requestAnimationFrame(() => {
                 mainWrapper.style.backgroundColor = `hsl(237, 10%, 54%)`;
-                missionWrapper.classList.remove('visible');
                 headingElement.classList.remove('is-acronym');
                 headingElement.style.transform = 'translateX(0px)';
                 headingElement.classList.remove('font-sans');
@@ -431,15 +510,17 @@ document.addEventListener('DOMContentLoaded', () => {
                         letter.style.filter = 'none';
                     });
                   });
-                mainWrapper.style.backgroundColor = `hsl(210, 100%, 10%)`;
+                mainWrapper.style.backgroundColor = `hsl(234, 99%, 43%)`;
                 (contentAfterPin as HTMLElement).style.opacity = '1';
-                missionWrapper.classList.add('visible');
               });
             }
         }, { passive: true });
       };
 
-      document.fonts.ready.then(initPinAnimation);
+      document.fonts.ready.then(() => {
+        initPinAnimation();
+        setLanguage('en'); // Set initial language
+      });
     }
   }
 });

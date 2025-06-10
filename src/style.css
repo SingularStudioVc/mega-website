@@ -396,6 +396,10 @@ h1#dynamic-heading.is-acronym {
     line-height: 1.5; /* Adjust line-height if needed */
   }
 
+  #projects-section {
+    padding: 80px 10% 50px 10%; /* Increase top padding to create more space from mission statement */
+  }
+
   .category-description.expanded {
     margin-top: 1.5em;
   }

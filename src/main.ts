@@ -143,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let centerTranslateX = 0;
         let finalScale = 0.1;
         let finalTranslateY = 0;
-        let totalLettersWidth = 0;
         let finalCenteringTranslateX = 0;
         let acronymCenterX = 0;
         const initialLetterSpacing = 0.005; // em, from CSS

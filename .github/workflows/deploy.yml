@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - no-g-rotation # Changed from main
+      - main # Changed from no-g-rotation
 
 permissions:
   contents: read

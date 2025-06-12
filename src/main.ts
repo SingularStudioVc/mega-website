@@ -128,398 +128,156 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && activeCard) closeOverlay(overlay);
   });
 
-  const pinContainer = document.getElementById('pin-container');
-  if (pinContainer) {
-    const contentAfterPin = document.getElementById('content-after-pin');
-    const mainWrapper = document.getElementById('main-wrapper');
-    const missionWrapper = document.getElementById('mission-wrapper');
+  // Initialize language
+  setLanguage('en');
 
-    if (contentAfterPin && mainWrapper && missionWrapper) {
-      const initPinAnimation = () => {
-        const headingElement = document.querySelector('#dynamic-heading') as HTMLElement;
-        const headingWrapper = headingElement.parentElement as HTMLElement;
-        const wordElements = headingElement.querySelectorAll('.mega-word') as NodeListOf<HTMLElement>;
+  // MEGA heading blur effect on scroll
+  const megaHeading = document.getElementById('mega-heading');
+  const missionWrapper = document.getElementById('mission-wrapper');
+  const projectsSection = document.getElementById('projects-section');
+  const maxBlur = 40; // Maximum blur in pixels
+  const blurTransitionDistance = 500; // Distance in pixels to transition from max blur to no blur
+  let scrollTimeout: number | null = null;
 
-        let centerTranslateX = 0;
-        let finalScale = 0.1;
-        let finalTranslateY = 0;
-        let finalCenteringTranslateX = 0;
-        let acronymCenterX = 0;
-        const initialLetterSpacing = 0.005; // em, from CSS
-        const finalLetterSpacing = -0.004; // em, for the final acronym state
-        const finalItalicLetterSpacing = 0.01; // em, for when it's sticky and italic
-
-        const calculateMetrics = () => {
-          // --- 1. Reset styles and remove final state classes ---
-          headingElement.classList.remove('is-acronym');
-          headingElement.style.transform = 'scale(1) translateY(0) translateX(0)';
-          wordElements.forEach(word => {
-            word.style.transform = 'translateX(0px)';
-            const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
-            letters.forEach(letter => {
-                letter.style.transform = 'translateX(0px)';
-                letter.style.opacity = '1';
-            });
-          });
-
-          // --- 2. Calculate initial state metrics (for Phase 1) ---
-          const initialRect = headingElement.getBoundingClientRect();
-          centerTranslateX = window.innerWidth - (2 * initialRect.left) - headingElement.scrollWidth;
-
-          // --- 3. Calculate collapse metrics (font-independent) ---
-          let accumulatedInitialWidths = 0;
-          wordElements.forEach((word) => {
-            const initial = word.querySelector('.mega-char') as HTMLElement;
-            if (!initial) return;
-            const wordDisplacement = word.offsetLeft - accumulatedInitialWidths;
-            word.dataset.wordDisplacementSerif = String(wordDisplacement);
-            accumulatedInitialWidths += initial.offsetWidth;
-
-            // Debug: log all words being processed
-            console.log('Processing word (serif):', word.textContent, 'displacement:', wordDisplacement);
-
-            const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
-            letters.forEach(letter => {
-                const displacement = letter.offsetLeft - initial.offsetLeft;
-                letter.dataset.displacementSerif = String(displacement);
-                
-                // Debug logging for AGAIN word
-                const wordText = word.textContent || '';
-                if (wordText.includes('A') && wordText.includes('gain')) {
-                  console.log('AGAIN word debug (serif):', {
-                    wordText: wordText,
-                    letter: letter.textContent,
-                    displacement: displacement,
-                    offsetLeft: letter.offsetLeft,
-                    initialOffsetLeft: initial.offsetLeft
-                  });
-                }
-            });
-          });
-
-          // Calculate metrics for sans-serif font
-          headingElement.classList.add('font-sans');
-          accumulatedInitialWidths = 0;
-          wordElements.forEach((word) => {
-            const initial = word.querySelector('.mega-char') as HTMLElement;
-            if (!initial) return;
-            const wordDisplacement = word.offsetLeft - accumulatedInitialWidths;
-            word.dataset.wordDisplacementSans = String(wordDisplacement);
-            accumulatedInitialWidths += initial.offsetWidth;
-
-            const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
-            letters.forEach(letter => {
-                const displacement = letter.offsetLeft - initial.offsetLeft;
-                letter.dataset.displacementSans = String(displacement);
-                
-                // Debug logging for AGAIN word (sans-serif)
-                const wordText = word.textContent || '';
-                if (wordText.includes('A') && wordText.includes('gain')) {
-                  console.log('AGAIN word debug (sans-serif):', {
-                    wordText: wordText,
-                    letter: letter.textContent,
-                    displacement: displacement,
-                    offsetLeft: letter.offsetLeft,
-                    initialOffsetLeft: initial.offsetLeft
-                  });
-                }
-            });
-          });
-          headingElement.classList.remove('font-sans');
-          
-          // --- 4. Calculate final state metrics (for Phases 2-4) ---
-          headingElement.classList.add('is-acronym'); // Temporarily apply final styles
-
-          // Temporarily apply collapse transforms to measure final acronym state
-          wordElements.forEach(word => {
-            const wordDisplacement = parseFloat(word.dataset.wordDisplacementSerif || '0');
-            word.style.transform = `translateX(-${wordDisplacement}px)`;
-            const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
-            letters.forEach(letter => {
-              const displacement = parseFloat(letter.dataset.displacementSerif || '0');
-              letter.style.transform = `translateX(-${displacement}px)`;
-            });
-          });
-
-          const initials = headingElement.querySelectorAll('.mega-char') as NodeListOf<HTMLElement>;
-          const firstInitialRect = initials[0].getBoundingClientRect();
-          const lastInitialRect = initials[initials.length - 1].getBoundingClientRect();
-          const finalAcronymWidth = lastInitialRect.right - firstInitialRect.left;
-          const finalAcronymLeft = firstInitialRect.left;
-          const finalAcronymCenter = finalAcronymLeft + finalAcronymWidth / 2;
-          
-          finalCenteringTranslateX = (window.innerWidth / 2) - finalAcronymCenter;
-          acronymCenterX = finalAcronymCenter - initialRect.left;
-
-          // Reset transforms that were temporarily applied
-          wordElements.forEach(word => {
-            word.style.transform = 'translateX(0px)';
-            const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
-            letters.forEach(letter => {
-              letter.style.transform = 'translateX(0px)';
-            });
+  window.addEventListener('scroll', () => {
+    if (megaHeading) {
+      const scrollY = window.scrollY;
+      const blurAmount = Math.max(0, maxBlur - (scrollY / blurTransitionDistance) * maxBlur);
+      
+      // Clear existing scroll timeout
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+      
+      // Check if scrolled to bottom
+      const isAtBottom = scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10; // 10px tolerance
+      
+      if (isAtBottom) {
+        // Hide everything except contact section when at bottom
+        if (megaHeading) {
+          megaHeading.style.opacity = '0';
+        }
+        if (projectsSection) {
+          projectsSection.style.opacity = '0';
+          projectsSection.style.pointerEvents = 'none'; // Make non-clickable
+        }
+        if (missionWrapper) {
+          missionWrapper.style.opacity = '0';
+        }
+        // Hide corner words
+        const cornerWords = document.querySelectorAll('.corner-word');
+        cornerWords.forEach(word => {
+          word.classList.remove('slide-in');
+        });
+        
+        // Show footer branding when at bottom
+        const footerBranding = document.getElementById('footer-branding');
+        if (footerBranding) {
+          footerBranding.classList.add('is-visible');
+        }
+        
+        // Hide language toggle when at bottom
+        const langToggle = document.getElementById('lang-toggle');
+        if (langToggle) {
+          langToggle.classList.remove('is-visible');
+        }
+      } else {
+        // Normal behavior when not at bottom
+        // MEGA heading blur effect
+        megaHeading.style.filter = `blur(${blurAmount}px)`;
+        megaHeading.style.opacity = '1';
+        
+        // Show projects section when scrolled enough
+        if (scrollY >= 650) {
+          if (projectsSection) {
+            projectsSection.style.opacity = '1';
+            projectsSection.style.pointerEvents = 'auto'; // Re-enable clicking
+          }
+          // Make MEGA transparent and blurred in Phase 3
+          megaHeading.style.opacity = '0.6';
+          megaHeading.style.filter = 'blur(40px)';
+        } else {
+          if (projectsSection) {
+            projectsSection.style.opacity = '0';
+            projectsSection.style.pointerEvents = 'none'; // Disable clicking when hidden
+          }
+          // Full opacity and normal blur when not in Phase 3
+          megaHeading.style.opacity = '1';
+          megaHeading.style.filter = `blur(${blurAmount}px)`;
+        }
+        
+        // Show mission statement when scrolled enough
+        if (scrollY >= 600) {
+          if (missionWrapper) {
+            missionWrapper.style.opacity = '1';
+          }
+          // Show language toggle when mission statement is visible
+          const langToggle = document.getElementById('lang-toggle');
+          if (langToggle) {
+            langToggle.classList.add('is-visible');
+          }
+        } else {
+          if (missionWrapper) {
+            missionWrapper.style.opacity = '0';
+          }
+          // Hide language toggle when mission statement is not visible
+          const langToggle = document.getElementById('lang-toggle');
+          if (langToggle) {
+            langToggle.classList.remove('is-visible');
+          }
+        }
+        
+        // Hide centered stacked text and vertical MEGA when not at bottom
+        const centeredStack = document.getElementById('centered-stack');
+        if (centeredStack) {
+          centeredStack.style.opacity = '0';
+        }
+        
+        // Simple corner words logic: appear when scroll is different than 0
+        const cornerWords = document.querySelectorAll('.corner-word');
+        if (scrollY > 0) {
+          // Show corner words when scrolled
+          cornerWords.forEach(word => {
+            word.classList.add('slide-in');
           });
           
-          const vh = window.innerHeight;
-          const initialFontSize = vh * 0.95;
-          const finalFontSize = 40;
-          finalScale = finalFontSize / initialFontSize;
-          
-          finalTranslateY = (20 + (finalFontSize / 2)) - (vh / 2);
-
-          // --- 5. Final cleanup ---
-          headingElement.classList.remove('is-acronym'); // Remove temporary class
-          
-          (contentAfterPin as HTMLElement).style.opacity = '0';
-          headingElement.style.transform = 'scale(1) translateY(0) translateX(0)';
-        };
-
-        calculateMetrics();
-        window.addEventListener('resize', calculateMetrics);
-
-        let currentPhase = -1;
-
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const pinContainerTop = pinContainer.offsetTop;
-            const pinContainerHeight = pinContainer.offsetHeight;
-            const viewHeight = window.innerHeight;
-            const pinDuration = pinContainerHeight - viewHeight;
-
-            if (scrollY >= pinContainerTop && scrollY < pinContainerTop + pinDuration) {
-              if (headingWrapper.classList.contains('is-fixed')) {
-                headingWrapper.classList.remove('is-fixed');
-                (contentAfterPin as HTMLElement).style.paddingTop = '0px';
-                headingElement.classList.remove('is-italic');
-                headingElement.style.letterSpacing = '';
+          // Set timeout to hide MEGA when scrolling stops (but only if scrolled enough)
+          if (scrollY >= 650) {
+            scrollTimeout = window.setTimeout(() => {
+              if (scrollY >= 650) { // Only hide if still in higher scroll range
+                megaHeading.style.opacity = '0';
               }
-
-              const progress = (scrollY - pinContainerTop) / pinDuration;
-
-              const startH = 237, endH = 234;
-              const startS = 10, endS = 99;
-              const startL = 54, endL = 43;
-              
-              const currentH = startH + (endH - startH) * progress;
-              const currentS = startS + (endS - startS) * progress;
-              const currentL = startL + (endL - startL) * progress;
-
-              mainWrapper.style.backgroundColor = `hsl(${currentH}, ${currentS}%, ${currentL}%)`;
-
-              if (progress >= 0.49) {
-                headingElement.classList.add('font-sans');
-              } else {
-                headingElement.classList.remove('font-sans');
-              }
-
-              if (progress >= 0.7) {
-                headingElement.classList.add('is-acronym');
-              } else {
-                headingElement.classList.remove('is-acronym');
-              }
-              
-              let phase: number, phaseProgress: number;
-
-              /**
-               * Phase 1: Reveal
-               * The oversized text, initially clipped, scrolls into the viewport from the right.
-               */
-              if (progress < 0.4) { 
-                phase = 1;
-                phaseProgress = progress / 0.4;
-                if (currentPhase !== phase) {
-                    currentPhase = phase;
-                    console.log(`Entering Phase ${phase}: Reveal`);
-                    headingElement.style.transformOrigin = '';
-                }
-                const currentX = centerTranslateX * phaseProgress;
-                headingElement.style.transform = `translateX(${currentX}px)`;
-              } else if (progress < 0.7) {
-                phase = 2;
-                phaseProgress = (progress - 0.4) / 0.3;
-                if (currentPhase !== phase) {
-                    currentPhase = phase;
-                    console.log(`Entering Phase ${phase}: Collapse & Center`);
-                    headingElement.style.transformOrigin = '';
-                }
-                const currentX = centerTranslateX + (finalCenteringTranslateX - centerTranslateX) * phaseProgress;
-                headingElement.style.transform = `translateX(${currentX}px)`;
-                wordElements.forEach(word => {
-                  const wDispSerif = parseFloat(word.dataset.wordDisplacementSerif || '0');
-                  const wDispSans = parseFloat(word.dataset.wordDisplacementSans || '0');
-                  
-                  const switchPoint = 0.3; // 30% of collapse
-                  const switchDuration = 0.2;
-                  let wordDisplacement = wDispSerif;
-
-                  if (phaseProgress > switchPoint) {
-                    const transitionProgress = Math.min(1, (phaseProgress - switchPoint) / switchDuration);
-                    wordDisplacement = wDispSerif + (wDispSans - wDispSerif) * transitionProgress;
-                  }
-
-                  word.style.transform = `translateX(-${wordDisplacement * phaseProgress}px)`;
-
-                  const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
-                  letters.forEach(letter => {
-                      const lDispSerif = parseFloat(letter.dataset.displacementSerif || '0');
-                      const lDispSans = parseFloat(letter.dataset.displacementSans || '0');
-                      let letterDisplacement = lDispSerif;
-
-                      if (phaseProgress > switchPoint) {
-                        const transitionProgress = Math.min(1, (phaseProgress - switchPoint) / switchDuration);
-                        letterDisplacement = lDispSerif + (lDispSans - lDispSerif) * transitionProgress;
-                      }
-
-                      letter.style.transform = `translateX(-${letterDisplacement * phaseProgress}px)`;
-                      letter.style.opacity = String(1 - phaseProgress);
-                      const blurAmount = phaseProgress * 8; // Max blur of 8px
-                      letter.style.filter = `blur(${blurAmount}px)`;
-                  });
-                });
-              } else if (progress < 0.8) { // Phase 3: Shrink
-                phase = 3;
-                phaseProgress = (progress - 0.7) / 0.1;
-                if (currentPhase !== phase) {
-                    currentPhase = phase;
-                    console.log(`Entering Phase ${phase}: Shrink`);
-                    headingElement.style.transformOrigin = `${acronymCenterX}px center`;
-                }
-                const currentScale = 1 - (1 - finalScale) * phaseProgress;
-                headingElement.style.transform = `translateX(${finalCenteringTranslateX}px) scale(${currentScale})`;
-
-                const currentLetterSpacing = initialLetterSpacing + (finalLetterSpacing - initialLetterSpacing) * phaseProgress;
-                headingElement.style.letterSpacing = `${currentLetterSpacing}em`;
-              } else { // Phase 4: Position
-                phase = 4;
-                phaseProgress = (progress - 0.8) / 0.2;
-                if (currentPhase !== phase) {
-                    currentPhase = phase;
-                    console.log(`Entering Phase ${phase}: Position`);
-                    headingElement.style.transformOrigin = `${acronymCenterX}px center`;
-                }
-                const currentY = finalTranslateY * phaseProgress;
-                headingElement.style.transform = `translateY(${currentY}px) translateX(${finalCenteringTranslateX}px) scale(${finalScale})`;
-                headingElement.style.letterSpacing = `${finalLetterSpacing}em`;
-
-                // Mission statement appears immediately when MEGA starts moving up
-                const missionFadeStart = 0; // Start fading in at the beginning of the phase
-                const missionOpacity = phaseProgress > missionFadeStart ? 
-                  (phaseProgress - missionFadeStart) / (1 - missionFadeStart) : 0;
-                
-                // Calculate mission position: starts at bottom, moves to center as acronym moves to top
-                const missionStartY = window.innerHeight; // Start below viewport
-                const missionEndY = window.innerHeight / 2; // End at center of screen
-                const missionCurrentY = missionStartY + (missionEndY - missionStartY) * phaseProgress;
-                
-                missionWrapper.style.transform = `translateY(${missionCurrentY}px)`;
-                missionWrapper.style.opacity = String(missionOpacity);
-                missionWrapper.style.pointerEvents = missionOpacity > 0 ? 'auto' : 'none';
-
-                // Start showing project section when mission statement reaches 60% of screen height
-                const missionProgressToCenter = (missionCurrentY - missionStartY) / (missionEndY - missionStartY);
-                const projectSectionOpacity = missionProgressToCenter > 0.6 ? 
-                  (missionProgressToCenter - 0.6) / 0.4 : 0; // Fade in from 60% to 100%
-                (contentAfterPin as HTMLElement).style.opacity = String(projectSectionOpacity);
-              }
-
-              requestAnimationFrame(() => {
-                if (progress >= 0.7) {
-                  wordElements.forEach(word => {
-                    const wordDisplacement = parseFloat(word.dataset.wordDisplacementSans || '0');
-                    word.style.transform = `translateX(-${wordDisplacement}px)`;
-                    const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
-                    letters.forEach(letter => {
-                      const displacement = parseFloat(letter.dataset.displacementSans || '0');
-                      letter.style.transform = `translateX(-${displacement}px)`;
-                      letter.style.opacity = '0';
-                      letter.style.filter = 'none';
-                    });
-                  });
-                } else if (progress < 0.4) {
-                    wordElements.forEach(word => {
-                        word.style.transform = 'translateX(0px)';
-                        const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
-                        letters.forEach(letter => {
-                            letter.style.transform = 'translateX(0px)';
-                            letter.style.opacity = '1';
-                            letter.style.filter = 'none';
-                        });
-                    });
-                }
-                if (progress >= 1) {
-                    headingWrapper.classList.add('is-fixed');
-                    (contentAfterPin as HTMLElement).style.paddingTop = `${headingWrapper.getBoundingClientRect().height}px`;
-                    headingElement.classList.add('is-italic');
-                    headingElement.style.letterSpacing = `${finalItalicLetterSpacing}em`;
-                }
-              });
-            } else if (scrollY < pinContainerTop) {
-                if (currentPhase !== 0) {
-                    currentPhase = 0;
-                    console.log("Before animation starts");
-                    if (headingWrapper.classList.contains('is-fixed')) {
-                      headingWrapper.classList.remove('is-fixed');
-                      (contentAfterPin as HTMLElement).style.paddingTop = '0px';
-                      headingElement.classList.remove('is-italic');
-                    }
-                    headingElement.style.transformOrigin = '';
-                }
-              requestAnimationFrame(() => {
-                mainWrapper.style.backgroundColor = `hsl(237, 10%, 54%)`;
-                headingElement.classList.remove('is-acronym');
-                headingElement.style.transform = 'translateX(0px)';
-                headingElement.classList.remove('font-sans');
-                headingElement.classList.remove('is-italic');
-                headingElement.style.letterSpacing = '';
-                wordElements.forEach(word => {
-                    word.style.transform = 'translateX(0px)';
-                    const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
-                    letters.forEach(letter => {
-                        letter.style.transform = 'translateX(0px)';
-                        letter.style.opacity = '1';
-                        letter.style.filter = 'none';
-                    });
-                  });
-                (contentAfterPin as HTMLElement).style.opacity = '0';
-              });
-            } else {
-                if (currentPhase !== 5) {
-                    currentPhase = 5;
-                    console.log("Animation finished");
-                    if (!headingWrapper.classList.contains('is-fixed')) {
-                      headingWrapper.classList.add('is-fixed');
-                      (contentAfterPin as HTMLElement).style.paddingTop = `${headingWrapper.getBoundingClientRect().height}px`;
-                    }
-                }
-              requestAnimationFrame(() => {
-                headingElement.classList.add('is-acronym');
-                headingElement.classList.add('font-sans');
-                headingElement.classList.add('is-italic');
-                headingElement.style.transformOrigin = `${acronymCenterX}px center`;
-                headingElement.style.transform = `translateX(${finalCenteringTranslateX}px) scale(${finalScale})`;
-                headingElement.style.letterSpacing = `${finalItalicLetterSpacing}em`;
-                wordElements.forEach(word => {
-                    const wordDisplacement = parseFloat(word.dataset.wordDisplacementSans || '0');
-                    word.style.transform = `translateX(-${wordDisplacement}px)`;
-                    const letters = word.querySelectorAll('.letter') as NodeListOf<HTMLElement>;
-                    letters.forEach(letter => {
-                        const displacement = parseFloat(letter.dataset.displacementSans || '0');
-                        letter.style.transform = `translateX(-${displacement}px)`;
-                        letter.style.opacity = '0';
-                        letter.style.filter = 'none';
-                    });
-                  });
-                mainWrapper.style.backgroundColor = `hsl(234, 99%, 43%)`;
-                (contentAfterPin as HTMLElement).style.opacity = '1';
-              });
-            }
-        }, { passive: true });
-      };
-
-      document.fonts.ready.then(() => {
-        initPinAnimation();
-        setLanguage('en'); // Set initial language
-      });
+            }, 300);
+          }
+        } else {
+          // Hide corner words when at top
+          cornerWords.forEach(word => {
+            word.classList.remove('slide-in');
+          });
+          
+          // Show MEGA heading with proper blur at top
+          megaHeading.style.opacity = '1';
+          megaHeading.style.filter = `blur(${blurAmount}px)`;
+        }
+        
+        // Hide footer branding when not at bottom
+        const footerBranding = document.getElementById('footer-branding');
+        if (footerBranding) {
+          footerBranding.classList.remove('is-visible');
+        }
+      }
     }
-  }
+  });
+
+  // Debug: Manual trigger for testing (uncomment to test)
+  // setTimeout(() => {
+  //   console.log('Manual trigger test');
+  //   const cornerWords = document.querySelectorAll('.corner-word');
+  //   cornerWords.forEach((word, index) => {
+  //     setTimeout(() => {
+  //       word.classList.add('slide-in');
+  //       console.log('Manual slide-in added to word', index, word.textContent);
+  //     }, index * 200);
+  //   });
+  // }, 2000);
 });

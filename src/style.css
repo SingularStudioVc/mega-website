@@ -1,10 +1,51 @@
+/* GT-America Font Declarations */
+@font-face {
+  font-family: 'GT-America-Standard';
+  src: url('./fonts/GT-America/GT-America-Standard-Regular-Trial.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-America-Standard';
+  src: url('./fonts/GT-America/GT-America-Standard-Regular-Italic-Trial.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-America-Standard';
+  src: url('./fonts/GT-America/GT-America-Standard-Medium-Trial.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-America-Standard';
+  src: url('./fonts/GT-America/GT-America-Standard-Bold-Trial.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-America-Standard';
+  src: url('./fonts/GT-America/GT-America-Standard-Black-Trial.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* @font-face rule removed as we are using Google Fonts */
 
 /* CSS */
 /* :root Inter styles removed */
 
 html {
-  background-color: hsl(237, 10%, 54%);
+  background-color: rgb(54, 64, 235);
 }
 
 body {
@@ -18,7 +59,7 @@ body {
 }
 
 #main-wrapper {
-  background-color: hsl(237, 10%, 54%); /* Initial duller, more greyish background color */
+  background-color: rgb(54, 64, 235); /* Initial duller, more greyish background color */
   height: 100%;
   width: 100%;
   box-sizing: border-box;
@@ -26,17 +67,62 @@ body {
 }
 
 #pin-container {
-  height: 400vh;
+  height: 100vh;
   position: relative;
 }
 
 #heading-wrapper {
   height: 100vh;
-  position: sticky;
-  top: 0;
+  position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+
+#mega-heading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-family: 'GT-America-Standard', sans-serif;
+  font-size: 25vw;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+  color: white;
+  letter-spacing: 0;
+  z-index: 1;
+  pointer-events: none;
+  white-space: nowrap;
+  filter: blur(40px);
+  transition: opacity 0.3s ease-out, filter 0.3s ease-out; /* Smooth transitions for opacity and blur */
+}
+
+.mega-letter {
+  display: inline-block;
+  position: relative;
+}
+
+.mega-letter:nth-child(1) { /* M */
+  margin-right: -0.27em;
+}
+
+.mega-letter:nth-child(2) { /* E */
+  margin-left: -0.27em;
+  margin-right: -0.2em;
+}
+
+.mega-letter:nth-child(3) { /* G */
+  margin-left: -0.2em;
+  margin-right: -0.21em;
+}
+
+.mega-letter:nth-child(4) { /* A */
+  margin-left: -0.21em;
 }
 
 #heading-wrapper.is-fixed {
@@ -99,23 +185,25 @@ h1#dynamic-heading.is-acronym {
 
 #content-after-pin {
   position: relative;
-  z-index: 2;
+  z-index: 10;
   background-color: transparent;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }
 
 #mission-wrapper {
-  position: sticky;
-  top: 0;
-  height: 100vh;
   width: 100%;
+  padding: 50px 10% 50px 10%; /* Same padding as projects section */
+  box-sizing: border-box;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  z-index: 1; /* Sits behind the header text but above the background */
-  opacity: 0;
-  pointer-events: none; /* So it doesn't block interactions */
+  color: white;
+  font-family: "IBM Plex Sans", sans-serif; 
+  font-variation-settings: "wght" 400;
+  font-size: 1.2em;
+  line-height: 1.6;
+  text-align: center;
 }
 
 #mega-mission-statement {
@@ -142,9 +230,10 @@ h1#dynamic-heading.is-acronym {
 
 #projects-section {
   position: relative;
-  padding: 50px 10%;
+  padding: 50px 10% 50px 10%;
   box-sizing: border-box;
   color: white; /* Ensure text is visible */
+  opacity: 0; /* Initially hidden */
 }
 
 .project-category {
@@ -390,6 +479,10 @@ h1#dynamic-heading.is-acronym {
 
 /* Responsive adjustments for mission statement on smaller screens */
 @media (max-width: 768px) {
+  #mega-heading {
+    font-size: 20vw;
+  }
+
   #mega-mission-statement {
     font-size: 1.8em; /* Reduce mission statement font size on smaller screens */
     padding: 20px 8%; /* Adjust padding for smaller screens */
@@ -542,17 +635,22 @@ body.overlay-open #backdrop {
 }
 
 #lang-toggle {
-  position: absolute;
-  top: 50%;
-  right: 5vw;
-  transform: translateY(-50%);
+  position: fixed;
+  top: 1vw;
+  right: 3vw;
   font-family: "IBM Plex Sans", sans-serif;
   font-size: 1em;
   font-variation-settings: "wght" 400;
   color: white;
-  opacity: 0;
+  opacity: 0; /* Hidden by default */
   pointer-events: none;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 250; /* Above corner words */
+}
+
+#lang-toggle.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 #heading-wrapper.is-fixed #lang-toggle {
@@ -578,4 +676,176 @@ body.overlay-open #backdrop {
 #lang-toggle .lang-separator {
   margin: 0 0.5em;
   opacity: 0.6;
+}
+
+/* Corner words styles */
+#corner-words {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 200; /* Increased z-index to be above MEGA heading */
+}
+
+.corner-word {
+  position: absolute;
+  font-family: 'GT-America-Standard', sans-serif;
+  font-size: 2.5vh; /* Mobile: use viewport height */
+  font-weight: 400;
+  color: white;
+  opacity: 0.6; /* Less transparent - 60% opacity */
+  transition: all 1s ease-out;
+  white-space: nowrap;
+}
+
+/* Desktop: use viewport width */
+@media (min-width: 768px) {
+  .corner-word {
+    font-size: 1.5vw;
+  }
+}
+
+#make-word {
+  top: 3vh;
+  left: 3vh;
+  transform: translate(-100vw, -100vh); /* Off-screen to top-left */
+}
+
+#earth-word {
+  top: 3vh;
+  right: 3vh;
+  transform: translate(100vw, -100vh); /* Off-screen to top-right */
+}
+
+#great-word {
+  bottom: 3vh;
+  left: 3vh;
+  transform: translate(-100vw, 100vh); /* Off-screen to bottom-left */
+}
+
+#again-word {
+  bottom: 3vh;
+  right: 3vh;
+  transform: translate(100vw, 100vh); /* Off-screen to bottom-right */
+}
+
+/* Desktop: use viewport width for positioning */
+@media (min-width: 768px) {
+  #make-word {
+    top: 3vw;
+    left: 3vw;
+  }
+  
+  #earth-word {
+    top: 3vw;
+    right: 3vw;
+  }
+  
+  #great-word {
+    bottom: 3vw;
+    left: 3vw;
+  }
+  
+  #again-word {
+    bottom: 3vw;
+    right: 3vw;
+  }
+}
+
+.corner-word.slide-in {
+  opacity: 0.6; /* Keep the same transparency when slid in */
+  transform: translate(0, 0) !important; /* Force the transform to reset */
+}
+
+/* Footer branding styles */
+#footer-branding {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 150;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease-in-out;
+}
+
+#footer-branding.is-visible {
+  opacity: 1;
+}
+
+#footer-branding .content-wrapper {
+  background-color: white;
+  padding: 2vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5vw;
+}
+
+/* Vertical MEGA styles */
+#vertical-mega {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
+}
+
+.vertical-mega-letter {
+  font-family: 'GT-America-Standard', sans-serif;
+  font-size: clamp(3vw, 7vh, 6vw);
+  font-weight: 700;
+  color: rgb(54, 64, 235);
+  opacity: 1;
+  line-height: 0.8;
+  margin: 0.05em 0;
+  white-space: nowrap;
+  letter-spacing: -0.1em;
+  transform: rotate(270deg);
+  filter: blur(4px);
+}
+
+.vertical-mega-letter:nth-child(1) { /* M */
+  margin-top: -0.27m;
+  margin-bottom: -0.3em;
+}
+
+.vertical-mega-letter:nth-child(2) { /* E */
+  margin-top: -0.2em;
+  margin-bottom: -0.3em;
+}
+
+.vertical-mega-letter:nth-child(3) { /* G */
+  margin-top: -0.2em;
+  margin-bottom: -0.1em;
+}
+
+.vertical-mega-letter:nth-child(4) { /* A */
+  margin-top: -0.21em;
+}
+
+/* Stack words container */
+.stack-words-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.stack-word {
+  font-family: 'GT-America-Standard', sans-serif;
+  font-size: clamp(1.5vw, 4vh, 3vw);
+  font-weight: 400;
+  color: rgb(54, 64, 235);
+  opacity: 1; /* Full opacity - no transparency */
+  line-height: 1;
+  margin: 0.1em 0;
+  white-space: nowrap;
 }

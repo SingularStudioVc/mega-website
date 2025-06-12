@@ -16,24 +16,34 @@
     <div id="main-wrapper">
       <div id="pin-container">
         <div id="heading-wrapper">
-          <h1 id="dynamic-heading">
-            <span>
-              <span class="mega-word"><span class="mega-char">M</span><span class="letter">a</span><span class="letter">k</span><span class="letter">e</span></span>
-              <span class="mega-word"><span class="mega-char">E</span><span class="letter">a</span><span class="letter">r</span><span class="letter">t</span><span class="letter">h</span></span>
-              <span class="mega-word"><span class="mega-char">G</span><span class="letter">r</span><span class="letter">e</span><span class="letter">a</span><span class="letter">t</span></span>
-              <span class="mega-word"><span class="mega-char">A</span><span class="letter">g</span><span class="letter">a</span><span class="letter">i</span><span class="letter">n</span></span>
-            </span>
+          <h1 id="mega-heading">
+            <span class="mega-letter">M</span>
+            <span class="mega-letter">E</span>
+            <span class="mega-letter">G</span>
+            <span class="mega-letter">A</span>
           </h1>
+          
+          <!-- Corner words that slide in -->
+          <div id="corner-words">
+            <div class="corner-word" id="make-word">Make</div>
+            <div class="corner-word" id="earth-word">Earth</div>
+            <div class="corner-word" id="great-word">Great</div>
+            <div class="corner-word" id="again-word">Again</div>
+          </div>
+          
           <div id="lang-toggle">
             <span class="lang-option active" data-lang="en">EN</span>
             <span class="lang-separator">/</span>
             <span class="lang-option" data-lang="fr">FR</span>
           </div>
         </div>
-        <div id="mission-wrapper">
-            <div id="mega-mission-statement" data-key="missionStatement"></div>
-        </div>
       </div>
+      
+      <!-- Mission statement in normal flow -->
+      <div id="mission-wrapper">
+        <div id="mega-mission-statement" data-key="missionStatement"></div>
+      </div>
+      
       <div id="content-after-pin">
         <section id="projects-section">
           <div class="project-category">
@@ -152,9 +162,34 @@
                 <button class="toggle-description" data-key="learnMore"></button>
                 <div class="category-description" data-key="projectGoggoDesc"></div>
               </div>
+              <div class="project-card">
+                <h3 class="project-title" data-key="projectConvoiTitle"></h3>
+                <p class="tagline" data-key="projectConvoiTagline"></p>
+                <button class="toggle-description" data-key="learnMore"></button>
+                <div class="category-description" data-key="projectConvoiDesc"></div>
+              </div>
             </div>
           </div>
         </section>
+        
+        <!-- Footer branding -->
+        <div id="footer-branding">
+          <div class="content-wrapper">
+            <div id="vertical-mega">
+              <span class="vertical-mega-letter">M</span>
+              <span class="vertical-mega-letter">E</span>
+              <span class="vertical-mega-letter">G</span>
+              <span class="vertical-mega-letter">A</span>
+            </div>
+            <div class="stack-words-container">
+              <div class="stack-word">Make</div>
+              <div class="stack-word">Earth</div>
+              <div class="stack-word">Great</div>
+              <div class="stack-word">Again</div>
+            </div>
+          </div>
+        </div>
+        
         <footer id="contact-footer">
           <a href="mailto:nicolas@ho-mo.xyz" data-key="contact"></a>
         </footer>

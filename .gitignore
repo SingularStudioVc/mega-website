@@ -5,6 +5,9 @@ node_modules/
 dist/
 build/
 
+# Fonts (proprietary/licensed fonts)
+# src/fonts/
+
 # macOS
 .DS_Store
 

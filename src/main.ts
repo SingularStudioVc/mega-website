@@ -2,7 +2,40 @@ import { translations } from './localization';
 
 type TranslationKey = keyof typeof translations['en'];
 
+// Font loading check
+function checkFontLoading() {
+  if ('fonts' in document) {
+    document.fonts.ready.then(() => {
+      console.log('All fonts loaded');
+      
+      // Check if GT-America is loaded
+      const testElement = document.createElement('span');
+      testElement.style.fontFamily = 'GT-America-Standard, Arial';
+      testElement.style.fontSize = '72px';
+      testElement.style.visibility = 'hidden';
+      testElement.textContent = 'MEGA';
+      document.body.appendChild(testElement);
+      
+      const gtAmericaWidth = testElement.offsetWidth;
+      
+      testElement.style.fontFamily = 'Arial';
+      const arialWidth = testElement.offsetWidth;
+      
+      document.body.removeChild(testElement);
+      
+      if (gtAmericaWidth !== arialWidth) {
+        console.log('✅ GT-America font is loaded and being used');
+      } else {
+        console.log('❌ GT-America font is not loaded, falling back to Arial');
+      }
+    });
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Check font loading
+  checkFontLoading();
+  
   const overlay = document.getElementById('project-overlay');
   if (!overlay) return;
 
@@ -135,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const megaHeading = document.getElementById('mega-heading');
   const missionWrapper = document.getElementById('mission-wrapper');
   const projectsSection = document.getElementById('projects-section');
-  const maxBlur = 40; // Maximum blur in pixels
+  const maxBlur = 30; // Maximum blur in pixels
   const blurTransitionDistance = 500; // Distance in pixels to transition from max blur to no blur
   let scrollTimeout: number | null = null;
 
@@ -195,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           // Make MEGA transparent and blurred in Phase 3
           megaHeading.style.opacity = '0.6';
-          megaHeading.style.filter = 'blur(40px)';
+          megaHeading.style.filter = 'blur(30px)';
         } else {
           if (projectsSection) {
             projectsSection.style.opacity = '0';

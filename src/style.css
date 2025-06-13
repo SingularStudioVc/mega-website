@@ -1,7 +1,7 @@
 /* GT-America Font Declarations */
 @font-face {
   font-family: 'GT-America-Standard';
-  src: url('./fonts/GT-America/GT-America-Standard-Regular-Trial.woff2') format('woff2');
+  src: url('./fonts/GT-America/GT-America-Standard-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -9,7 +9,7 @@
 
 @font-face {
   font-family: 'GT-America-Standard';
-  src: url('./fonts/GT-America/GT-America-Standard-Regular-Italic-Trial.woff2') format('woff2');
+  src: url('./fonts/GT-America/GT-America-Standard-Regular-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -17,7 +17,7 @@
 
 @font-face {
   font-family: 'GT-America-Standard';
-  src: url('./fonts/GT-America/GT-America-Standard-Medium-Trial.woff2') format('woff2');
+  src: url('./fonts/GT-America/GT-America-Standard-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -25,7 +25,7 @@
 
 @font-face {
   font-family: 'GT-America-Standard';
-  src: url('./fonts/GT-America/GT-America-Standard-Bold-Trial.woff2') format('woff2');
+  src: url('./fonts/GT-America/GT-America-Standard-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -33,7 +33,7 @@
 
 @font-face {
   font-family: 'GT-America-Standard';
-  src: url('./fonts/GT-America/GT-America-Standard-Black-Trial.woff2') format('woff2');
+  src: url('./fonts/GT-America/GT-America-Standard-Black.woff2') format('woff2');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -52,8 +52,8 @@ body {
   height: auto; /* Adjusted scroll height for new animation */
   margin: 0;
   color: white;
-  font-family: "IBM Plex Sans", sans-serif;
-  font-variation-settings: "wdth" 100, "wght" 300;
+  font-family: 'GT-America-Standard', 'Helvetica', 'Arial', 'Comic Sans MS', sans-serif;
+  font-weight: 400;
   overflow-x: hidden;
   will-change: background-color; /* Hint for animation */
 }
@@ -98,7 +98,7 @@ body {
   z-index: 1;
   pointer-events: none;
   white-space: nowrap;
-  filter: blur(40px);
+  filter: blur(30px);
   transition: opacity 0.3s ease-out, filter 0.3s ease-out; /* Smooth transitions for opacity and blur */
 }
 
@@ -136,10 +136,10 @@ body {
 h1#dynamic-heading {
   margin: 0;
   padding: 0 0 0 5vw;
-  font-family: "IBM Plex Serif", serif;
+  font-family: 'GT-America-Standard', sans-serif;
   font-size: 95vh;
   line-height: 1;
-  font-variation-settings: "wght" 700;
+  font-weight: 700;
   font-style: normal;
   text-transform: uppercase;
   text-align: left;
@@ -149,7 +149,7 @@ h1#dynamic-heading {
 }
 
 h1#dynamic-heading.font-sans {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'GT-America-Standard', sans-serif;
   letter-spacing: 0.005em;
 }
 
@@ -199,8 +199,8 @@ h1#dynamic-heading.is-acronym {
   align-items: center;
   justify-content: center;
   color: white;
-  font-family: "IBM Plex Sans", sans-serif; 
-  font-variation-settings: "wght" 400;
+  font-family: 'GT-America-Standard', sans-serif; 
+  font-weight: 400;
   font-size: 1.2em;
   line-height: 1.6;
   text-align: center;
@@ -211,21 +211,20 @@ h1#dynamic-heading.is-acronym {
   padding: 20px 15%; /* Top/bottom 20px, Left/right 15% */
   box-sizing: border-box;
   color: white;
-  font-family: "IBM Plex Sans", sans-serif; 
-  font-variation-settings: "wght" 400;
+  font-family: 'GT-America-Standard', sans-serif; 
+  font-weight: 400;
   font-size: 3em; /* Adjusted from 1.5em */
   line-height: 1.6;
   text-align: left; /* Changed from center to left */
 }
 
 #mega-mission-statement .mission-mega-highlight {
-  /* font-weight: 600; Replaced by font-variation-settings */
-  font-style: italic; /* Ensuring italic style */
-  font-variation-settings: "wght" 600, "ital" 1, "wdth" 75; /* Changed wdth to 75 */
+  font-weight: 600;
+  font-style: italic;
 }
 
 #mega-mission-statement .mission-bold {
-  font-variation-settings: "wght" 600;
+  font-weight: 600;
 }
 
 #projects-section {
@@ -259,6 +258,7 @@ h1#dynamic-heading.is-acronym {
 .category-symbol svg {
   width: 100px;
   height: 100px;
+  opacity: 0.6; /* Make entire SVG more transparent */
 }
 
 .project-category .category-symbol svg rect,
@@ -273,9 +273,9 @@ h1#dynamic-heading.is-acronym {
 }
 
 .category-header h2 {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'GT-America-Standard', sans-serif;
   font-size: 2.2em;
-  font-variation-settings: "wght" 500;
+  font-weight: 500;
   text-transform: uppercase;
   margin: 0;
   margin-bottom: 0.25em;
@@ -288,7 +288,7 @@ h1#dynamic-heading.is-acronym {
   margin: 0;
   max-width: 65ch;
   line-height: 1.4;
-  font-variation-settings: "wght" 400;
+  font-weight: 400;
   margin-bottom: 1em;
 }
 
@@ -303,9 +303,9 @@ h1#dynamic-heading.is-acronym {
   cursor: pointer;
   padding: 0.5em 1.5em;
   margin-top: 1.5em;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'GT-America-Standard', sans-serif;
   font-size: 0.9em;
-  font-variation-settings: "wght" 500;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   transition: background-color 0.2s, color 0.2s;
@@ -424,7 +424,7 @@ h1#dynamic-heading.is-acronym {
 
 .project-title {
   font-size: 1.5em;
-  font-variation-settings: "wght" 600;
+  font-weight: 600;
   margin: 0 0 0.5em 0;
   max-height: 100% !important;
   opacity: 1 !important;
@@ -436,7 +436,7 @@ h1#dynamic-heading.is-acronym {
   margin: 0;
   max-width: 65ch;
   line-height: 1.4;
-  font-variation-settings: "wght" 400;
+  font-weight: 400;
   margin-bottom: 1em;
 }
 
@@ -446,9 +446,9 @@ h1#dynamic-heading.is-acronym {
   color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
   padding: 0;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'GT-America-Standard', sans-serif;
   font-size: 1em;
-  font-variation-settings: "wght" 500;
+  font-weight: 500;
   text-decoration: underline;
 }
 
@@ -504,92 +504,6 @@ h1#dynamic-heading.is-acronym {
 /* End Tinos Font Classes */
 
 /* Responsive adjustments for mission statement on smaller screens */
-.ibm-plex-serif-thin {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 100;
-  font-style: normal;
-}
-
-.ibm-plex-serif-extralight {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 200;
-  font-style: normal;
-}
-
-.ibm-plex-serif-light {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 300;
-  font-style: normal;
-}
-
-.ibm-plex-serif-regular {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.ibm-plex-serif-medium {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 500;
-  font-style: normal;
-}
-
-.ibm-plex-serif-semibold {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 600;
-  font-style: normal;
-}
-
-.ibm-plex-serif-bold {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 700;
-  font-style: normal;
-}
-
-.ibm-plex-serif-thin-italic {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 100;
-  font-style: italic;
-}
-
-.ibm-plex-serif-extralight-italic {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 200;
-  font-style: italic;
-}
-
-.ibm-plex-serif-light-italic {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.ibm-plex-serif-regular-italic {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 400;
-  font-style: italic;
-}
-
-.ibm-plex-serif-medium-italic {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 500;
-  font-style: italic;
-}
-
-.ibm-plex-serif-semibold-italic {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 600;
-  font-style: italic;
-}
-
-.ibm-plex-serif-bold-italic {
-  font-family: "IBM Plex Serif", serif;
-  font-weight: 700;
-  font-style: italic;
-}
-/* End IBM Plex Serif Classes */
-
-/* Responsive adjustments for mission statement on smaller screens */
 
 body.overlay-open > #main-wrapper {
   /* filter: blur(8px) brightness(0.6); */ /* No longer needed */
@@ -638,9 +552,9 @@ body.overlay-open #backdrop {
   position: fixed;
   top: 1vw;
   right: 3vw;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'GT-America-Standard', sans-serif;
   font-size: 1em;
-  font-variation-settings: "wght" 400;
+  font-weight: 400;
   color: white;
   opacity: 0; /* Hidden by default */
   pointer-events: none;
@@ -666,7 +580,7 @@ body.overlay-open #backdrop {
 
 #lang-toggle .lang-option.active {
   opacity: 1;
-  font-variation-settings: "wght" 600;
+  font-weight: 600;
 }
 
 #lang-toggle .lang-option:not(.active):hover {

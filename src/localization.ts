@@ -66,7 +66,7 @@ export const translations = {
                   <p>As an open protocol stewarded by MEGA, Convoi invites contributions from across the ecosystem — ensuring that the future of shared mobility is cooperative, regenerative, and truly interoperable.</p>`,
     
     // Contact
-    contact: 'nicolas@ho-mo.xyz'
+    contact: 'Contact Us'
   },
   fr: {
     // Mission Statement
@@ -111,7 +111,7 @@ export const translations = {
     
     // Projet Racine
     projetRacineTitle: 'Projet Racine',
-    projetRacineTagline: `Agriculture de précision autonome à haute efficacité, alimentée par l'IA, pour les zones urbaines denses.`,
+    projetRacineTagline: 'Agriculture de précision autonome à haute efficacité, alimentée par l\'IA, pour les zones urbaines denses.',
     projetRacineDesc: `<p>Le Projet Racine envisage un système de culture d'intérieur modulaire et entièrement autonome, conçu pour les environnements urbains à haute densité. Conçu pour la flexibilité et l'évolutivité, chaque unité intègre une robotique de précision, une surveillance des cultures pilotée par l'IA et un contrôle environnemental en boucle fermée pour permettre une culture toute l'année avec une supervision humaine minimale.</p>
                   <p>Son architecture modulaire permet des déploiements adaptés aux espaces disponibles et soutient une expansion progressive. La consommation d'eau est réduite jusqu'à 95 % grâce à la recirculation, tandis que le traitement UV élimine le besoin de pesticides chimiques via un contrôle des pathogènes basé sur les UV, et automatise la gestion biologique des ravageurs avec un lâcher de précision d'insectes. Des systèmes robotiques gèrent la plantation, la récolte et la lutte biologique contre les ravageurs avec une grande précision.</p>
                   <p>La disposition verticale maximise le rendement par mètre carré, réduisant considérablement les besoins en transport et diminuant le gaspillage alimentaire.</p>
@@ -135,6 +135,6 @@ export const translations = {
                   <p>En tant que protocole ouvert géré par MEGA, Convoi invite les contributions de tout l'écosystème — assurant que l'avenir de la mobilité partagée soit coopératif, régénératif et véritablement interopérable.</p>`,
 
     // Contact
-    contact: 'nicolas@ho-mo.xyz'
+    contact: 'Nous Contacter'
   }
 };

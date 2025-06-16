@@ -173,130 +173,66 @@ document.addEventListener('DOMContentLoaded', () => {
   let scrollTimeout: number | null = null;
 
   window.addEventListener('scroll', () => {
-    if (megaHeading) {
-      const scrollY = window.scrollY;
-      const blurAmount = Math.max(0, maxBlur - (scrollY / blurTransitionDistance) * maxBlur);
+    const scrollY = window.scrollY;
+    
+    // Check if scrolled to bottom
+    const isAtBottom = scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10;
+    
+    // Add or remove at-bottom class
+    if (isAtBottom) {
+      document.body.classList.add('at-bottom');
+    } else {
+      document.body.classList.remove('at-bottom');
+    }
+    
+    // Handle mission statement and language toggle
+    const langToggle = document.getElementById('lang-toggle');
+    if (langToggle && missionWrapper) {
+      const shouldShow = scrollY >= 1000 && !isAtBottom;  // Don't show if at bottom
       
-      // Clear existing scroll timeout
-      if (scrollTimeout) {
-        clearTimeout(scrollTimeout);
+      if (shouldShow) {
+        langToggle.classList.add('is-visible');
+        missionWrapper.classList.add('is-visible');
+      } else {
+        langToggle.classList.remove('is-visible');
+        missionWrapper.classList.remove('is-visible');
+      }
+    }
+    
+    // Handle MEGA heading fade
+    if (megaHeading) {
+      // Handle bottom state first
+      if (isAtBottom) {
+        megaHeading.style.opacity = '0';
+        return; // Exit early when at bottom
       }
       
-      // Check if scrolled to bottom
-      const isAtBottom = scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10; // 10px tolerance
-      
-      if (isAtBottom) {
-        // Hide everything except contact section when at bottom
-        if (megaHeading) {
-          megaHeading.style.opacity = '0';
-        }
-        if (projectsSection) {
-          projectsSection.style.opacity = '0';
-          projectsSection.style.pointerEvents = 'none'; // Make non-clickable
-        }
-        if (missionWrapper) {
-          missionWrapper.style.opacity = '0';
-        }
-        // Hide corner words
-        const cornerWords = document.querySelectorAll('.corner-word');
-        cornerWords.forEach(word => {
-          word.classList.remove('slide-in');
-        });
+      // Normal scroll behavior (not at bottom)
+      if (scrollY >= 800) {
+        // Calculate fade progress from 800px to 1100px (300px range)
+        const fadeProgress = Math.min(1, (scrollY - 800) / 300);
+        const newOpacity = Math.max(0, 1 - fadeProgress);
+        const newBlur = fadeProgress * 30;  // Blur goes from 0 to 30px, matching fade progress
         
-        // Show footer branding when at bottom
-        const footerBranding = document.getElementById('footer-branding');
-        if (footerBranding) {
-          footerBranding.classList.add('is-visible');
-        }
+        // Apply the changes directly
+        megaHeading.style.opacity = newOpacity.toString();
+        megaHeading.style.filter = `blur(${newBlur}px)`;
+      } else if (scrollY >= 0) {
+        // Initial blur reduction over first 50px of scroll
+        const initialBlurProgress = Math.min(1, scrollY / 50);
+        const initialBlur = 30 - (initialBlurProgress * 30); // Goes from 30px to 0px over 50px
         
-        // Hide language toggle when at bottom
-        const langToggle = document.getElementById('lang-toggle');
-        if (langToggle) {
-          langToggle.classList.remove('is-visible');
-        }
-      } else {
-        // Normal behavior when not at bottom
-        // MEGA heading blur effect
-        megaHeading.style.filter = `blur(${blurAmount}px)`;
         megaHeading.style.opacity = '1';
+        megaHeading.style.filter = `blur(${initialBlur}px)`;
         
-        // Show projects section when scrolled enough
-        if (scrollY >= 650) {
-          if (projectsSection) {
-            projectsSection.style.opacity = '1';
-            projectsSection.style.pointerEvents = 'auto'; // Re-enable clicking
+        // Show corner words after initial unblur
+        const cornerWords = document.getElementById('corner-words');
+        if (cornerWords) {
+          if (scrollY >= 50) {
+            cornerWords.classList.add('is-visible');
+          } else {
+            cornerWords.classList.remove('is-visible');
           }
-          // Make MEGA transparent and blurred in Phase 3
-          megaHeading.style.opacity = '0.6';
-          megaHeading.style.filter = 'blur(30px)';
-        } else {
-          if (projectsSection) {
-            projectsSection.style.opacity = '0';
-            projectsSection.style.pointerEvents = 'none'; // Disable clicking when hidden
-          }
-          // Full opacity and normal blur when not in Phase 3
-          megaHeading.style.opacity = '1';
-          megaHeading.style.filter = `blur(${blurAmount}px)`;
-        }
-        
-        // Show mission statement when scrolled enough
-        if (scrollY >= 600) {
-          if (missionWrapper) {
-            missionWrapper.style.opacity = '1';
-          }
-          // Show language toggle when mission statement is visible
-          const langToggle = document.getElementById('lang-toggle');
-          if (langToggle) {
-            langToggle.classList.add('is-visible');
-          }
-        } else {
-          if (missionWrapper) {
-            missionWrapper.style.opacity = '0';
-          }
-          // Hide language toggle when mission statement is not visible
-          const langToggle = document.getElementById('lang-toggle');
-          if (langToggle) {
-            langToggle.classList.remove('is-visible');
-          }
-        }
-        
-        // Hide centered stacked text and vertical MEGA when not at bottom
-        const centeredStack = document.getElementById('centered-stack');
-        if (centeredStack) {
-          centeredStack.style.opacity = '0';
-        }
-        
-        // Simple corner words logic: appear when scroll is different than 0
-        const cornerWords = document.querySelectorAll('.corner-word');
-        if (scrollY > 0) {
-          // Show corner words when scrolled
-          cornerWords.forEach(word => {
-            word.classList.add('slide-in');
-          });
-          
-          // Set timeout to hide MEGA when scrolling stops (but only if scrolled enough)
-          if (scrollY >= 650) {
-            scrollTimeout = window.setTimeout(() => {
-              if (scrollY >= 650) { // Only hide if still in higher scroll range
-                megaHeading.style.opacity = '0';
-              }
-            }, 300);
-          }
-        } else {
-          // Hide corner words when at top
-          cornerWords.forEach(word => {
-            word.classList.remove('slide-in');
-          });
-          
-          // Show MEGA heading with proper blur at top
-          megaHeading.style.opacity = '1';
-          megaHeading.style.filter = `blur(${blurAmount}px)`;
-        }
-        
-        // Hide footer branding when not at bottom
-        const footerBranding = document.getElementById('footer-branding');
-        if (footerBranding) {
-          footerBranding.classList.remove('is-visible');
         }
       }
     }

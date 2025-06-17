@@ -58,10 +58,12 @@ body {
   justify-content: center;
 }
 
-#mega-heading svg {
-  width: 100%;
-  height: 100%;
+#mega-heading img {
+  width: 60vw; /* Control SVG size relative to viewport */
+  height: auto;
   color: currentColor; /* This will inherit the color from the parent */
+  transition: transform 0.1s ease-out;
+  position: relative;
 }
 
 /* Remove old letter-specific styles since we're using SVG now */
@@ -197,7 +199,7 @@ h1#dynamic-heading.is-acronym {
 
 .category-header {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   width: 500px;
   flex-shrink: 0;
@@ -232,13 +234,15 @@ h1#dynamic-heading.is-acronym {
 }
 
 .category-header h2 {
-  font-family: 'Helvetica', sans-serif;
+  font-family: 'JetBrains Mono', 'SF Mono', 'SFMono-Regular', 'ui-monospace', 'Menlo', 'Monaco', 'Consolas', monospace;
   font-size: 4em;
-  font-weight: 700;
+  font-weight: 400;
   margin: 0;
   margin-bottom: 0.25em;
   line-height: 1;
   color: rgb(204, 220, 255);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .tagline {
@@ -665,4 +669,25 @@ body.at-bottom .exclamation-svg {
 .vertical-mega-img svg path,
 .vertical-mega-img svg circle {
   fill: rgb(64, 72, 243) !important;
+}
+
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  background: rgb(64, 72, 243); /* Primary blue */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%) scale(0.6);
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+#custom-cursor.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }

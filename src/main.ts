@@ -233,4 +233,20 @@ document.addEventListener('DOMContentLoaded', () => {
   //     }, index * 200);
   //   });
   // }, 2000);
+
+  // Custom cursor logic
+  const customCursor = document.getElementById('custom-cursor');
+  let cursorTimeout: number | undefined;
+
+  if (customCursor) {
+    window.addEventListener('mousemove', (e) => {
+      customCursor.classList.add('active');
+      customCursor.style.left = `${e.clientX}px`;
+      customCursor.style.top = `${e.clientY}px`;
+      if (cursorTimeout) clearTimeout(cursorTimeout);
+      cursorTimeout = window.setTimeout(() => {
+        customCursor.classList.remove('active');
+      }, 200);
+    });
+  }
 });

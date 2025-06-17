@@ -45,45 +45,29 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
-  font-family: 'Helvetica', sans-serif;
-  font-size: 25vw;
-  font-weight: 700;
-  font-style: normal;
-  line-height: 1;
-  text-transform: uppercase;
-  text-align: center;
   color: white;
-  letter-spacing: 0;
   z-index: 1;
   pointer-events: none;
-  white-space: nowrap;
   filter: blur(30px);  /* Initial blur back */
   opacity: 1;
   transition: opacity 0.2s ease-out, filter 0.1s ease-out;  /* Made filter transition faster */
   will-change: opacity, filter;
+  width: 60vw; /* Control SVG size relative to viewport */
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+#mega-heading svg {
+  width: 100%;
+  height: 100%;
+  color: currentColor; /* This will inherit the color from the parent */
+}
+
+/* Remove old letter-specific styles since we're using SVG now */
 .mega-letter {
-  display: inline-block;
-  position: relative;
-}
-
-.mega-letter:nth-child(1) { /* M */
-  margin-right: -0.27em;
-}
-
-.mega-letter:nth-child(2) { /* E */
-  margin-left: -0.27em;
-  margin-right: -0.22em;
-}
-
-.mega-letter:nth-child(3) { /* G */
-  margin-left: -0.22em;
-  margin-right: -0.21em;
-}
-
-.mega-letter:nth-child(4) { /* A */
-  margin-left: -0.21em;
+  display: none;
 }
 
 #heading-wrapper.is-fixed {
@@ -449,7 +433,7 @@ h1#dynamic-heading.is-acronym {
 /* Responsive adjustments for mission statement on smaller screens */
 @media (max-width: 768px) {
   #mega-heading {
-    font-size: 20vw;
+    width: 80vw; /* Larger relative size on mobile */
   }
 
   #mega-mission-statement {
@@ -568,7 +552,7 @@ body.overlay-open #backdrop {
 .corner-word {
   position: absolute;
   font-family: 'Helvetica', sans-serif;
-  font-size: 1.5vw;
+  font-size: clamp(14px, 1.5vw, 24px); /* Min: 14px, Preferred: 1.5vw, Max: 24px */
   font-weight: 400;
   color: rgb(204, 220, 255);
   opacity: 0;

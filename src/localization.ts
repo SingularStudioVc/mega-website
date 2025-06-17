@@ -1,7 +1,7 @@
 export const translations = {
   en: {
     // Mission Statement
-    missionStatement: `<span class="mission-mega-highlight">MEGA</span> is a nonprofit initiative dedicated to accelerating high-impact, <span class="mission-bold">resource-conscious technological innovations</span> that restore, protect, and advance Earth's ecosystems and global human prosperity.`,
+    missionStatement: `Nonprofit initiative accelerating <span class="mission-bold">resource-conscious technologies</span> to strengthen Earth's ecosystems and shared prosperity.`,
 
     // Categories
     unite: 'Unite',
@@ -70,7 +70,7 @@ export const translations = {
   },
   fr: {
     // Mission Statement
-    missionStatement: `<span class="mission-mega-highlight">MEGA</span> est une initiative à but non lucratif dédiée à l'accélération des innovations technologiques à fort impact et <span class="mission-bold">économes en ressources</span> qui restaurent, protègent et font progresser les écosystèmes de la Terre et la prospérité humaine mondiale.`,
+    missionStatement: `Initiative à but non lucratif accélérant les <span class="mission-bold">technologies économes en ressources</span> pour renforcer les écosystèmes terrestres et la prospérité partagée.`,
     
     // Categories
     unite: 'Unir',

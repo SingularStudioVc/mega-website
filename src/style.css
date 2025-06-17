@@ -4,13 +4,13 @@
 /* :root Inter styles removed */
 
 html {
-  background-color: rgb(64, 72, 243);
+  background-color: white;
 }
 
 body {
   height: auto; /* Adjusted scroll height for new animation */
   margin: 0;
-  color: white;
+  color: rgb(64, 72, 243);
   font-family: 'Helvetica', 'Arial', sans-serif;
   font-weight: 400;
   overflow-x: hidden;
@@ -18,7 +18,7 @@ body {
 }
 
 #main-wrapper {
-  background-color: rgb(64, 72, 243); /* Main theme color */
+  background-color: white; /* Changed to white background */
   height: 100%;
   width: 100%;
   box-sizing: border-box;
@@ -45,10 +45,9 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
-  color: white;
+  color: rgb(64, 72, 243);
   z-index: 1;
   pointer-events: none;
-  filter: blur(30px);  /* Initial blur back */
   opacity: 1;
   transition: opacity 0.2s ease-out, filter 0.1s ease-out;  /* Made filter transition faster */
   will-change: opacity, filter;
@@ -143,7 +142,7 @@ h1#dynamic-heading.is-acronym {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: rgb(64, 72, 243);
   font-family: 'Helvetica', sans-serif; 
   font-weight: 400;
   font-size: 1.2em;
@@ -162,7 +161,7 @@ h1#dynamic-heading.is-acronym {
   position: relative;
   padding: 20px 5%;
   box-sizing: border-box;
-  color: white;
+  color: rgb(64, 72, 243);
   font-family: 'Helvetica', sans-serif;
   font-weight: 400;
   font-size: 3.5em;
@@ -184,40 +183,41 @@ h1#dynamic-heading.is-acronym {
 
 #projects-section {
   position: relative;
-  padding: 50px 10% 50px 10%;
+  padding: 250px 10% 50px 10%;
   box-sizing: border-box;
-  color: white;
+  color: rgb(64, 72, 243);
 }
 
 .project-category {
   margin-bottom: 5em;
+  display: flex;
+  align-items: center;
+  gap: 3em;
 }
 
 .category-header {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 2em;
-  border-bottom: 1px solid rgba(204, 220, 255, 0.2);
-  padding-bottom: 1em;
-}
-
-.category-title-tagline {
-  /* No special alignment styles needed here. */
+  width: 500px;
+  flex-shrink: 0;
+  gap: 1em;
 }
 
 .category-symbol {
-  margin-right: 1.5em;
+  margin-bottom: 0;
 }
 
 .category-symbol svg {
-  width: 100px;
-  height: 100px;
-  opacity: 0.6; /* Make entire SVG more transparent */
+  width: 180px;
+  height: 180px;
+  opacity: 1;
 }
 
 .project-category .category-symbol svg rect,
 .project-category .category-symbol svg path {
   stroke: rgb(204, 220, 255);
+  stroke-width: 4;
   fill: none;
 }
 
@@ -226,24 +226,30 @@ h1#dynamic-heading.is-acronym {
   fill: rgb(204, 220, 255);
 }
 
+.project-category .category-symbol svg g {
+  stroke: rgb(204, 220, 255);
+  stroke-width: 4;
+}
+
 .category-header h2 {
   font-family: 'Helvetica', sans-serif;
-  font-size: 2.2em;
-  font-weight: 500;
-  text-transform: uppercase;
+  font-size: 4em;
+  font-weight: 700;
   margin: 0;
   margin-bottom: 0.25em;
   line-height: 1;
+  color: rgb(204, 220, 255);
 }
 
 .tagline {
-  font-size: 1.2em;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.4em;
+  color: white;
   margin: 0;
   max-width: 65ch;
   line-height: 1.4;
   font-weight: 400;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
+  margin-top: auto;
 }
 
 .tagline-group {
@@ -252,11 +258,10 @@ h1#dynamic-heading.is-acronym {
 
 .toggle-description {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(64, 72, 243, 0.8);
+  color: white;
   cursor: pointer;
-  padding: 0.5em 1.5em;
-  margin-top: 1.5em;
+  padding: 0.2em 0.2em 0.2em 0.2em;
   font-family: 'Helvetica', sans-serif;
   font-size: 0.9em;
   font-weight: 500;
@@ -264,23 +269,30 @@ h1#dynamic-heading.is-acronym {
   letter-spacing: 0.05em;
   transition: background-color 0.2s, color 0.2s;
   text-decoration: none !important;
+  margin-top: 0;
+  align-self: flex-start;
+  margin-left: 0;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 10;
+  width: fit-content;
 }
 
 .toggle-description:hover {
-  background-color: rgba(255, 255, 255, 0.9);
-  color: hsl(237, 10%, 20%);
+  background-color: white;
+  color: rgb(64, 72, 243);
 }
 
 .category-description {
-  margin-bottom: 2em;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
   font-size: 1.1em;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.85);
+  color: white;
   max-width: 75ch;
   transition: max-height 0.7s ease-in-out, margin-top 0.7s ease-in-out, opacity 0.5s ease-in-out;
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
   margin-top: 0;
 }
 
@@ -288,26 +300,32 @@ h1#dynamic-heading.is-acronym {
   max-height: 1000px; /* Large enough to fit content */
   opacity: 1;
   margin-top: 2em;
+  color: white;
 }
 
 .projects-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2em;
-  padding-top: 2em;
+  flex: 1;
 }
 
 .project-card {
-  background-color: rgba(204, 220, 255, 0.05);
+  background-color: rgb(64, 72, 243);
   border-radius: 0;
   border: none;
   padding: 1.5em;
   cursor: pointer;
   transition: background-color 0.2s;
+  color: white;
+  clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 0 100%);
+  display: flex;
+  flex-direction: column;
+  height: 420px;
 }
 
 .project-card:hover {
-  background-color: rgba(204, 220, 255, 0.1);
+  background-color: rgb(64, 72, 243);
 }
 
 .project-card.is-hidden {
@@ -342,7 +360,7 @@ h1#dynamic-heading.is-acronym {
   height: 100%;
   overflow-y: auto;
   padding: 2em;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgb(64, 72, 243);
   border-color: rgba(255, 255, 255, 0.2);
   display: flex;
   flex-direction: column;
@@ -363,6 +381,7 @@ h1#dynamic-heading.is-acronym {
   font-weight: 300;
   text-transform: none;
   letter-spacing: normal;
+  color: white;
 }
 
 /* #project-overlay .project-title,
@@ -381,28 +400,9 @@ h1#dynamic-heading.is-acronym {
   margin: 0 0 0.5em 0;
   max-height: 100% !important;
   opacity: 1 !important;
-}
-
-.tagline {
-  font-size: 1.2em;
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
-  max-width: 65ch;
-  line-height: 1.4;
-  font-weight: 400;
-  margin-bottom: 1em;
-}
-
-.toggle-description {
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.9);
-  cursor: pointer;
-  padding: 0;
-  font-family: 'Helvetica', sans-serif;
-  font-size: 1em;
-  font-weight: 500;
-  text-decoration: underline;
+  color: white;
+  margin-top: 0;
+  flex-shrink: 0;
 }
 
 #project-overlay .tagline {
@@ -424,8 +424,10 @@ h1#dynamic-heading.is-acronym {
   pointer-events: none;
   font-size: 1.1em;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.85);
+  color: white;
   max-width: 75ch;
+  transition: max-height 0.7s ease-in-out, margin-top 0.7s ease-in-out, opacity 0.5s ease-in-out;
+  margin-top: 0;
 }
 
 /* End Tinos Font Classes */
@@ -448,6 +450,24 @@ h1#dynamic-heading.is-acronym {
 
   .category-description.expanded {
     margin-top: 1.5em;
+  }
+
+  .project-category {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2em;
+  }
+
+  .category-header {
+    width: 100%;
+  }
+
+  .category-header h2 {
+    font-size: 3em;
+  }
+
+  .projects-list {
+    width: 100%;
   }
 }
 
@@ -488,17 +508,17 @@ body.overlay-open #backdrop {
 }
 
 #contact-footer a {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(64, 72, 243, 0.8);
   text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(64, 72, 243, 0.3);
   padding-bottom: 0.25em;
   transition: color 0.2s, border-color 0.2s;
   font-size: 1.2em;
 }
 
 #contact-footer a:hover {
-  color: white;
-  border-color: white;
+  color: rgb(64, 72, 243);
+  border-color: rgb(64, 72, 243);
 }
 
 #lang-toggle {
@@ -508,7 +528,7 @@ body.overlay-open #backdrop {
   font-family: 'Helvetica', sans-serif;
   font-size: 1em;
   font-weight: 400;
-  color: white;
+  color: rgb(64, 72, 243);
   z-index: 250;
   opacity: 0;  /* Start hidden */
   pointer-events: none;  /* Disable interaction when hidden */
@@ -537,76 +557,6 @@ body.overlay-open #backdrop {
 
 #lang-toggle .lang-separator {
   margin: 0 0.5em;
-  opacity: 0.6;
-}
-
-/* Corner words styles */
-#corner-words {
-  position: fixed;  /* Changed from absolute to fixed */
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 1;  /* Always visible once shown */
-}
-
-.corner-word {
-  position: absolute;
-  font-family: 'Helvetica', sans-serif;
-  font-size: clamp(14px, 1.5vw, 24px); /* Min: 14px, Preferred: 1.5vw, Max: 24px */
-  font-weight: 400;
-  color: rgb(204, 220, 255);
-  opacity: 0;
-  transform: translate(100px, 100px);
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-  padding: 2vw;  /* 5% of viewport width for all sides */
-}
-
-#corner-words.is-visible .corner-word {
-  transform: translate(0, 0);
-  opacity: 0.6;  /* Fade to 0.6 opacity */
-}
-
-#make-word {
-  top: 0;
-  left: 0;
-  transform: translate(-100px, -100px);
-}
-
-#earth-word {
-  top: 0;
-  right: 0;
-  transform: translate(100px, -100px);
-}
-
-#great-word {
-  bottom: 0;
-  left: 0;
-  transform: translate(-100px, 100px);
-}
-
-#again-word {
-  bottom: 0;
-  right: 0;
-  transform: translate(100px, 100px);
-}
-
-#corner-words.is-visible #make-word {
-  transform: translate(0, 0);
-  opacity: 0.6;
-}
-
-#corner-words.is-visible #earth-word {
-  transform: translate(0, 0);
-  opacity: 0.6;
-}
-
-#corner-words.is-visible #great-word {
-  transform: translate(0, 0);
-  opacity: 0.6;
-}
-
-#corner-words.is-visible #again-word {
-  transform: translate(0, 0);
   opacity: 0.6;
 }
 
@@ -655,7 +605,7 @@ body.at-bottom .exclamation-svg {
   font-family: 'Helvetica', sans-serif;
   font-size: clamp(1.5vw, 4vh, 3vw);
   font-weight: 400;
-  color: rgb(204, 220, 255);
+  color: rgb(64, 72, 243);
   opacity: 1;
   line-height: 1;
   margin: 0.1em 0;
@@ -666,7 +616,7 @@ body.at-bottom .exclamation-svg {
   font-family: 'Helvetica', sans-serif;
   font-size: clamp(1.5vw, 4vh, 3vw);
   font-weight: 700;
-  color: white;
+  color: rgb(64, 72, 243);
   opacity: 0;
   line-height: 1;
   transition: opacity 0.3s ease-out;
@@ -676,11 +626,11 @@ body.at-bottom .exclamation-svg {
 
 /* Update inline SVG attributes in HTML */
 .category-symbol svg[stroke="white"] {
-  stroke: rgb(204, 220, 255);
+  stroke: rgb(64, 72, 243);
 }
 
 .category-symbol svg[fill="white"] {
-  fill: rgb(204, 220, 255);
+  fill: rgb(64, 72, 243);
 }
 
 .exclamation-svg {
@@ -705,4 +655,14 @@ body.at-bottom .exclamation-svg {
   margin-left: 0.5em;
   opacity: 1 !important;
   vertical-align: middle;
+}
+
+/* Ensure vertical-mega SVG uses primary blue color */
+.vertical-mega-img svg {
+  fill: rgb(64, 72, 243) !important;
+}
+
+.vertical-mega-img svg path,
+.vertical-mega-img svg circle {
+  fill: rgb(64, 72, 243) !important;
 }

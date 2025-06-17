@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handle mission statement and language toggle
     const langToggle = document.getElementById('lang-toggle');
     if (langToggle && missionWrapper) {
-      const shouldShow = scrollY >= 1000 && !isAtBottom;  // Don't show if at bottom
+      const shouldShow = scrollY >= 700 && !isAtBottom;  // Don't show if at bottom
       
       if (shouldShow) {
         langToggle.classList.add('is-visible');
@@ -200,36 +200,24 @@ document.addEventListener('DOMContentLoaded', () => {
       // Handle bottom state first
       if (isAtBottom) {
         megaHeading.style.opacity = '0';
+        megaHeading.style.filter = 'blur(0px)';
         return; // Exit early when at bottom
       }
       
       // Normal scroll behavior (not at bottom)
-      if (scrollY >= 800) {
-        // Calculate fade progress from 800px to 1100px (300px range)
-        const fadeProgress = Math.min(1, (scrollY - 800) / 300);
+      if (scrollY >= 700) {
+        // Calculate fade and blur progress from 700px to 1000px (300px range)
+        const fadeProgress = Math.min(1, (scrollY - 700) / 300);
         const newOpacity = Math.max(0, 1 - fadeProgress);
-        const newBlur = fadeProgress * 30;  // Blur goes from 0 to 30px, matching fade progress
+        const newBlur = Math.min(10, fadeProgress * 10); // Blur from 0px to 10px
         
         // Apply the changes directly
         megaHeading.style.opacity = newOpacity.toString();
         megaHeading.style.filter = `blur(${newBlur}px)`;
       } else if (scrollY >= 0) {
-        // Initial blur reduction over first 50px of scroll
-        const initialBlurProgress = Math.min(1, scrollY / 50);
-        const initialBlur = 30 - (initialBlurProgress * 30); // Goes from 30px to 0px over 50px
-        
+        // Keep heading visible and clear
         megaHeading.style.opacity = '1';
-        megaHeading.style.filter = `blur(${initialBlur}px)`;
-        
-        // Show corner words after initial unblur
-        const cornerWords = document.getElementById('corner-words');
-        if (cornerWords) {
-          if (scrollY >= 50) {
-            cornerWords.classList.add('is-visible');
-          } else {
-            cornerWords.classList.remove('is-visible');
-          }
-        }
+        megaHeading.style.filter = 'blur(0px)';
       }
     }
   });

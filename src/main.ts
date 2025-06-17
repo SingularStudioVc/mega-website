@@ -167,11 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // MEGA heading blur effect on scroll
   const megaHeading = document.getElementById('mega-heading');
   const missionWrapper = document.getElementById('mission-wrapper');
-  const projectsSection = document.getElementById('projects-section');
-  const maxBlur = 30; // Maximum blur in pixels
-  const blurTransitionDistance = 500; // Distance in pixels to transition from max blur to no blur
-  let scrollTimeout: number | null = null;
-
+  
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
     

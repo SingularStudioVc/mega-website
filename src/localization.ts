@@ -3,6 +3,9 @@ export const translations = {
     // Mission Statement
     missionStatement: `Nonprofit initiative accelerating <span class="mission-bold">resource-conscious technologies</span> to strengthen Earth's ecosystems and shared prosperity.`,
 
+    // Section Titles
+    ourProjects: 'Our Projects',
+
     // Categories
     unite: 'Unite',
     protect: 'Protect',
@@ -71,6 +74,9 @@ export const translations = {
   fr: {
     // Mission Statement
     missionStatement: `Initiative à but non lucratif accélérant les <span class="mission-bold">technologies économes en ressources</span> pour renforcer les écosystèmes terrestres et la prospérité partagée.`,
+    
+    // Section Titles
+    ourProjects: 'Nos Projets',
     
     // Categories
     unite: 'Unir',

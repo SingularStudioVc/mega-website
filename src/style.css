@@ -190,11 +190,36 @@ h1#dynamic-heading.is-acronym {
   color: rgb(64, 72, 243);
 }
 
+#projects-title {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 4em;
+  font-weight: 600;
+  margin: 0 0 2em 0;
+  color: rgb(64, 72, 243);
+  text-align: center;
+}
+
 .project-category {
   margin-bottom: 5em;
   display: flex;
   align-items: center;
   gap: 3em;
+  position: relative; /* Added for divider positioning */
+}
+
+/* Add divider after each category except the last one */
+.project-category:not(:last-child) {
+  padding-bottom: 5em; /* Space for the divider */
+}
+
+.project-category:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -10%; /* Compensate for parent padding */
+  width: 120%; /* Extend beyond parent padding */
+  height: 1px;
+  background-color: rgba(64, 72, 243, 0.2); /* Primary blue with low opacity */
 }
 
 .category-header {

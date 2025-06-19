@@ -97,7 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
     translatableElements.forEach(element => {
       const key = element.getAttribute('data-key') as TranslationKey;
       if (key && translations[lang][key]) {
-        element.innerHTML = translations[lang][key];
+        if (element instanceof HTMLInputElement && element.type !== 'submit') {
+          element.value = translations[lang][key];
+        } else {
+          element.innerHTML = translations[lang][key];
+        }
       }
     });
 

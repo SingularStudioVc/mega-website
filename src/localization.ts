@@ -4,7 +4,8 @@ export const translations = {
     missionStatement: `Nonprofit initiative accelerating <span class="mission-bold">resource-conscious technologies</span> to strengthen Earth's ecosystems and shared prosperity.`,
 
     // Section Titles
-    ourProjects: 'Our Projects',
+    projectsTitle: 'Projects',
+    megaCapsSection: 'Contribute',
 
     // Categories
     unite: 'Unite',
@@ -69,14 +70,29 @@ export const translations = {
                   <p>As an open protocol stewarded by MEGA, Convoi invites contributions from across the ecosystem — ensuring that the future of shared mobility is cooperative, regenerative, and truly interoperable.</p>`,
     
     // Contact
-    contact: 'Contact Us'
+    contact: 'Contact Us',
+
+    // MEGA CAPS
+    megaCapsTitle: "MEGA CAPS",
+    megaCapsDesc: "Support the MEGA mission with our pay-what-you-want cap donation. Choose any amount from €0 - every contribution helps us make Earth great again.",
+    soldOut: "SOLD OUT",
+    notifyMe: "",
+    emailPlaceholder: "Email me when available",
+    minimumLabel: "Minimum",
+    suggestedLabel: "Suggested",
+    supporterLabel: "Supporter",
+    benefactorLabel: "Benefactor",
+    customLabel: "Custom amount",
+    customAmountPlaceholder: "Enter amount",
+    getMegaCap: "Get Cap"
   },
   fr: {
     // Mission Statement
     missionStatement: `Initiative à but non lucratif accélérant les <span class="mission-bold">technologies économes en ressources</span> pour renforcer les écosystèmes terrestres et la prospérité partagée.`,
     
     // Section Titles
-    ourProjects: 'Nos Projets',
+    projectsTitle: 'Projets',
+    megaCapsSection: 'Contribuer',
     
     // Categories
     unite: 'Unir',
@@ -141,6 +157,20 @@ export const translations = {
                   <p>En tant que protocole ouvert géré par MEGA, Convoi invite les contributions de tout l'écosystème — assurant que l'avenir de la mobilité partagée soit coopératif, régénératif et véritablement interopérable.</p>`,
 
     // Contact
-    contact: 'Nous Contacter'
+    contact: 'Nous Contacter',
+
+    // MEGA CAPS
+    megaCapsTitle: "CASQUETTES MEGA",
+    megaCapsDesc: "Soutenez la mission MEGA avec notre casquette en don à prix libre. Choisissez le montant à partir de 0€ - chaque contribution nous aide à rendre la Terre à nouveau formidable.",
+    soldOut: "ÉPUISÉ",
+    notifyMe: "",
+    emailPlaceholder: "Me prévenir par email dès disponible",
+    minimumLabel: "Minimum",
+    suggestedLabel: "Suggéré",
+    supporterLabel: "Soutien",
+    benefactorLabel: "Bienfaiteur",
+    customLabel: "Montant personnalisé",
+    customAmountPlaceholder: "Entrez le montant",
+    getMegaCap: "Obtenir"
   }
 };

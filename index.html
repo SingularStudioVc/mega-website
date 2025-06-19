@@ -29,7 +29,10 @@
       
       <div id="content-after-pin">
         <section id="projects-section">
-          <h2 id="projects-title" data-key="ourProjects"></h2>
+          <h2 id="projects-title" class="section-title">
+            <span class="title-circle"></span>
+            <span class="title-text" data-key="projectsTitle"></span>
+          </h2>
           <div class="project-category">
             <div class="category-header">
               <div class="category-symbol">
@@ -143,6 +146,64 @@
                 <p class="tagline" data-key="projectConvoiTagline"></p>
                 <button class="toggle-description" data-key="learnMore"></button>
                 <div class="category-description" data-key="projectConvoiDesc"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- MEGA Caps Section -->
+        <section id="mega-caps-section">
+          <h2 id="mega-caps-title" class="section-title">
+            <span class="title-circle"></span>
+            <span class="title-text" data-key="megaCapsSection"></span>
+          </h2>
+          
+          <div class="caps-header">
+            <h3 class="caps-main-title" data-key="megaCapsTitle"></h3>
+            <p class="caps-main-description" data-key="megaCapsDesc"></p>
+          </div>
+
+          <div class="caps-content">
+            <div class="caps-image-container">
+              <img src="/src/png/mega-cap.png" alt="MEGA Cap" class="caps-image" />
+            </div>
+            
+            <div class="caps-payment-section">
+              <div class="price-selector">
+                <div class="sold-out-label" data-key="soldOut"></div>
+                <div class="price-options">
+                  <button class="price-option" disabled>
+                    <span class="amount">€0</span>
+                    <span class="label" data-key="minimumLabel"></span>
+                  </button>
+                  <button class="price-option" disabled>
+                    <span class="amount">€20</span>
+                    <span class="label" data-key="suggestedLabel"></span>
+                  </button>
+                  <button class="price-option" disabled>
+                    <span class="amount">€50</span>
+                    <span class="label" data-key="supporterLabel"></span>
+                  </button>
+                  <button class="price-option" disabled>
+                    <span class="amount">€100</span>
+                    <span class="label" data-key="benefactorLabel"></span>
+                  </button>
+                </div>
+                <div class="custom-price">
+                  <div class="input-wrapper">
+                    <span class="currency">€</span>
+                    <input type="number" disabled placeholder="0" min="0" class="custom-amount" data-placeholder-key="customAmountPlaceholder">
+                  </div>
+                  <span class="label" data-key="customLabel"></span>
+                </div>
+                <button class="caps-button action-button" disabled data-key="getMegaCap"></button>
+              </div>
+
+              <div class="notification-section">
+                <form action="https://formsubmit.co/contact@makeearthgreatagain.earth" method="POST" class="notify-form">
+                  <input type="email" name="email" required class="notify-email" placeholder="Email me when available" data-placeholder-key="emailPlaceholder">
+                  <button type="submit" class="caps-button" data-key="notifyMe"></button>
+                </form>
               </div>
             </div>
           </div>

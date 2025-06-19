@@ -84,7 +84,8 @@ export const translations = {
     benefactorLabel: "Benefactor",
     customLabel: "Custom amount",
     customAmountPlaceholder: "Enter amount",
-    getMegaCap: "Get Cap"
+    getMegaCap: "Get Cap",
+    privacyNotice: "Your email will only be used to notify you when caps are back in stock. We respect your privacy. Contact us below if you have any questions."
   },
   fr: {
     // Mission Statement
@@ -171,6 +172,7 @@ export const translations = {
     benefactorLabel: "Bienfaiteur",
     customLabel: "Montant personnalisé",
     customAmountPlaceholder: "Entrez le montant",
-    getMegaCap: "Obtenir"
+    getMegaCap: "Obtenir",
+    privacyNotice: "Votre email sera uniquement utilisé pour vous informer du retour en stock des casquettes. Nous respectons votre vie privée. Contactez-nous ci-dessous si vous avez des questions."
   }
 };

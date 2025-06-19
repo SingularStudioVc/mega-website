@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (element instanceof HTMLInputElement && element.type !== 'submit') {
           element.value = translations[lang][key];
         } else {
-          element.innerHTML = translations[lang][key];
+        element.innerHTML = translations[lang][key];
         }
       }
     });

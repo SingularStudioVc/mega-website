@@ -364,6 +364,15 @@ h1#dynamic-heading.is-acronym {
   width: fit-content;
 }
 
+.toggle-description .arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .toggle-description .arrow {
+  transform: translateX(1200%);
+}
+
 .toggle-description:hover {
   background-color: white;
   color: rgb(64, 72, 243);

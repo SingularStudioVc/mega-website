@@ -15,7 +15,7 @@ export const translations = {
     shift: 'Shift',
 
     // Learn More Button
-    learnMore: 'Learn more &rarr;',
+    learnMore: 'Learn more <span class="arrow">&rarr;</span>',
     
     // Project Y
     projectYTitle: 'Project Y',
@@ -103,7 +103,7 @@ export const translations = {
     shift: 'Déplacer',
     
     // Learn More Button
-    learnMore: 'En savoir plus &rarr;',
+    learnMore: 'En savoir plus <span class="arrow">&rarr;</span>',
 
     // Project Y
     projectYTitle: 'Projet Y',

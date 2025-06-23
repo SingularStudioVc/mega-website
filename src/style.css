@@ -502,6 +502,11 @@ h1#dynamic-heading.is-acronym {
   text-align: left;
 }
 
+#project-overlay .project-card::after,
+#project-overlay .card-content-clipped {
+  display: none;
+}
+
 #project-overlay .toggle-description {
   position: absolute;
   top: 0.75em;

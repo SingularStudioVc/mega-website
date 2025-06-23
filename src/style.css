@@ -233,59 +233,84 @@ h1#dynamic-heading.is-acronym {
 .project-category {
   margin-bottom: 5em;
   display: flex;
-  align-items: center;
   gap: 3em;
   position: relative; /* Added for divider positioning */
+  align-items: stretch;
 }
 
 /* Add divider after each category except the last one */
 .project-category:not(:last-child) {
-  padding-bottom: 5em; /* Space for the divider */
+  z-index: 1;
 }
 
-.project-category:not(:last-child)::after {
-  content: '';
+.category-background-video {
   position: absolute;
-  bottom: 0;
-  left: -10%; /* Compensate for parent padding */
-  width: 120%; /* Extend beyond parent padding */
-  height: 1px;
-  background-color: rgba(64, 72, 243, 0.2); /* Primary blue with low opacity */
+  top: 0;
+  left: 0;
+  width: 500px; /* Match category-header width */
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
 }
 
 .category-header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 500px;
   flex-shrink: 0;
   gap: 1em;
+  position: relative;
+  z-index: 2;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.category-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(204, 220, 255, 0.5);
 }
 
 .category-symbol {
+  display: block;
+  position: absolute;
+  top: 2em;
+  left: 2em;
   margin-bottom: 0;
 }
 
 .category-symbol svg {
-  width: 180px;
-  height: 180px;
+  width: 80px;
+  height: 80px;
   opacity: 1;
+  text-transform: uppercase;
+  stroke-width: 4;
 }
 
-.project-category .category-symbol svg rect,
 .project-category .category-symbol svg path {
-  stroke: rgb(204, 220, 255);
+  stroke: white !important;
   stroke-width: 4;
-  fill: none;
+  fill: none !important;
 }
 
 .project-category .category-symbol svg polygon {
-  stroke: none;
-  fill: rgb(204, 220, 255);
+  stroke: none !important;
+  fill: white !important;
+}
+
+.project-category:first-child .category-symbol svg polygon {
+  stroke: white !important;
+  stroke-width: 50;
 }
 
 .project-category .category-symbol svg g {
-  stroke: rgb(204, 220, 255);
+  stroke: white !important;
   stroke-width: 4;
 }
 
@@ -294,11 +319,12 @@ h1#dynamic-heading.is-acronym {
   font-size: 4em;
   font-weight: 400;
   margin: 0;
-  margin-bottom: 0.25em;
   line-height: 1;
-  color: rgb(204, 220, 255);
+  color: white;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  position: relative;
+  z-index: 2;
 }
 
 .tagline {
@@ -307,7 +333,7 @@ h1#dynamic-heading.is-acronym {
   margin: 0;
   max-width: 65ch;
   line-height: 1.4;
-  font-weight: 400;
+  font-weight: 550;
   margin-bottom: 1.5em;
   margin-top: auto;
 }
@@ -368,20 +394,69 @@ h1#dynamic-heading.is-acronym {
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2em;
   flex: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .project-card {
   background-color: rgb(64, 72, 243);
   border-radius: 0;
   border: none;
-  padding: 1.5em;
   cursor: pointer;
   transition: background-color 0.2s;
   color: white;
   clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 40px, 100% 100%, 0 100%);
   display: flex;
   flex-direction: column;
-  height: 420px;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250px;
+  height: 250px;
+  background: rgb(204, 220, 255);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.card-content-base, .card-content-clipped {
+  padding: 1.5em;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.card-content-base {
+  position: relative;
+  z-index: 1;
+}
+
+.card-content-clipped {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  clip-path: circle(125px at center);
+  pointer-events: none;
+}
+
+.card-content-clipped .project-title,
+.card-content-clipped .tagline,
+.card-content-clipped .toggle-description {
+  color: rgb(64, 72, 243);
+}
+
+.card-content-clipped .toggle-description {
+  border-color: rgb(64, 72, 243);
 }
 
 .project-card:hover {
@@ -455,7 +530,7 @@ h1#dynamic-heading.is-acronym {
 } */
 
 .project-title {
-  font-size: 1.5em;
+  font-size: 4em;
   font-weight: 600;
   margin: 0 0 0.5em 0;
   max-height: 100% !important;
@@ -518,8 +593,14 @@ h1#dynamic-heading.is-acronym {
     gap: 2em;
   }
 
+  .category-background-video {
+    width: 100%;
+    height: 400px;
+  }
+
   .category-header {
     width: 100%;
+    height: 400px;
   }
 
   .category-header h2 {
@@ -528,6 +609,11 @@ h1#dynamic-heading.is-acronym {
 
   .projects-list {
     width: 100%;
+  }
+
+  .project-card {
+    height: auto;
+    min-height: 400px;
   }
 }
 

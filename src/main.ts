@@ -105,6 +105,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    // After setting text content, duplicate it for the knockout effect
+    document.querySelectorAll('.project-card').forEach(card => {
+      const baseContent = card.querySelector('.card-content-base');
+      const clippedContent = card.querySelector('.card-content-clipped');
+      if (baseContent && clippedContent) {
+        clippedContent.innerHTML = baseContent.innerHTML;
+      }
+    });
+
     langOptions?.forEach(option => {
       if (option.getAttribute('data-lang') === lang) {
         option.classList.add('active');

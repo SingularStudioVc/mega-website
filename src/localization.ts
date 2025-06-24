@@ -71,6 +71,7 @@ export const translations = {
     
     // Contact
     contact: 'Contact Us',
+    instagram: 'Instagram',
 
     // MEGA CAPS
     megaCapsTitle: "MEGA CAPS",
@@ -159,6 +160,7 @@ export const translations = {
 
     // Contact
     contact: 'Nous Contacter',
+    instagram: 'Instagram',
 
     // MEGA CAPS
     megaCapsTitle: "CASQUETTES MEGA",

@@ -665,6 +665,10 @@ body.overlay-open #backdrop {
 #contact-footer {
   padding: 5em 0;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
 }
 
 #contact-footer a {
@@ -679,6 +683,30 @@ body.overlay-open #backdrop {
 #contact-footer a:hover {
   color: rgb(64, 72, 243);
   border-color: rgb(64, 72, 243);
+}
+
+.instagram-link {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.instagram-link svg {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+}
+
+.instagram-link:hover svg {
+  transform: scale(1.1);
+}
+
+.footer-separator {
+  color: rgba(64, 72, 243, 0.6);
+  font-size: 1.2em;
+  margin: 0 0.5em;
 }
 
 #lang-toggle {

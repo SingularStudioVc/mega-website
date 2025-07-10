@@ -100,7 +100,7 @@ export function showVitesseMegaverse() {
 
     // Update CCTV cameras
     if (cctvSystem) {
-      cctvSystem.update(deltaTime);
+      cctvSystem.update();
     }
 
     if (renderer && scene && camera) {

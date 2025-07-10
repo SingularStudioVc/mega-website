@@ -112,10 +112,10 @@ export class CCTVSystem {
     this.cameras.push(camera);
   }
 
-  update(deltaTime: number) {
+  update() {
     // Update all cameras (blinking lights, etc.)
     this.cameras.forEach(camera => {
-      camera.update(deltaTime);
+      camera.update();
     });
   }
 } 

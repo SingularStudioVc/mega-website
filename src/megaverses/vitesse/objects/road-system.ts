@@ -110,7 +110,6 @@ export class RoadSystem {
   }
 
   private addRoadMarkings() {
-    const lineMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
     const numBlocks = this.citySize / this.buildingBlockSize;
 
     // Center lines on all roads

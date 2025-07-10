@@ -1,6 +1,4 @@
 import { translations } from './localization';
-import * as THREE from 'three';
-import { showMegaverse } from './megaverses/megaverse-manager';
 
 type TranslationKey = keyof typeof translations['en'];
 

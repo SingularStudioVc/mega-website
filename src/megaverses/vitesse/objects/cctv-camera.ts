@@ -90,7 +90,7 @@ export class CCTVCamera extends THREE.Group {
     this.add(this.light);
   }
 
-  update(deltaTime: number) {
+  update() {
     // Make the recording light blink
     const blinkSpeed = 2; // blinks per second
     const time = Date.now() * 0.001;

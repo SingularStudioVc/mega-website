@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export function setupCameraControls(camera: THREE.PerspectiveCamera, renderer: THREE.WebGLRenderer, domElement: HTMLElement) {
+export function setupCameraControls(camera: THREE.PerspectiveCamera, _renderer: THREE.WebGLRenderer, domElement: HTMLElement) {
   // Minimal orbit controls (no external dependency)
   let isDragging = false;
   let lastX = 0, lastY = 0;

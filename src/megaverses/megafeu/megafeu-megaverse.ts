@@ -29,7 +29,6 @@ const planeSize = 100;
 let ballRollAngle = 0; // accumulated roll angle for smooth rotation
 
 // Camera follow and speed effects
-let cameraTarget = new THREE.Vector3();
 let cameraShake = 0;
 
 // Spider manager
@@ -303,11 +302,13 @@ export function showMegafeuMegaverse() {
     }
 
     // Simple grid movement for speed sensation
-    const planeMaterial = plane.material as THREE.MeshStandardMaterial;
-    if (planeMaterial.map) {
-      planeMaterial.map.offset.x += ballVelocity.x * deltaTime * 0.04;
-      planeMaterial.map.offset.y += ballVelocity.z * deltaTime * 0.04;
-      planeMaterial.map.needsUpdate = true;
+    if (plane) {
+      const planeMaterial = plane.material as THREE.MeshStandardMaterial;
+      if (planeMaterial.map) {
+        planeMaterial.map.offset.x += ballVelocity.x * deltaTime * 0.04;
+        planeMaterial.map.offset.y += ballVelocity.z * deltaTime * 0.04;
+        planeMaterial.map.needsUpdate = true;
+      }
     }
 
     // Animate burning forest flames
@@ -315,7 +316,7 @@ export function showMegafeuMegaverse() {
 
     // Animate spiders
     if (scene) {
-      const sprayingSpider = spiderManager.update(deltaTime, currentTime, scene);
+      spiderManager.update(deltaTime, currentTime, scene);
     }
 
     // Animate drones - Smart swarm system

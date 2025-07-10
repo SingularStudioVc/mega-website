@@ -17,7 +17,7 @@ export class BallController {
   private shadowMesh: THREE.Mesh | null = null;
   private buildings: THREE.Mesh[];
   private stuckTimer: number = 0;
-  private lastPosition: THREE.Vector3;
+
 
   constructor(buildings: THREE.Mesh[] = []) {
     // Start ball on a road (at intersection where roads cross)
@@ -33,7 +33,6 @@ export class BallController {
     this.keys = {};
     this.planeSize = 200;
     this.buildings = buildings;
-    this.lastPosition = this.ballPosition.clone();
   }
 
   createBall(scene: THREE.Scene) {
@@ -154,7 +153,6 @@ export class BallController {
     }
     
     // Update position
-    const previousBallPosition = this.ballPosition.clone();
     this.ballPosition.add(this.ballVelocity.clone().multiplyScalar(deltaTime));
     
     // Keep ball on the plane
@@ -163,7 +161,6 @@ export class BallController {
 
     // Improved collision detection with buildings
     if (this.sphere) {
-      let collisionDetected = false;
       
       // Use a larger collision radius to detect collisions earlier
       const collisionRadius = this.ballRadius + 1;
@@ -179,7 +176,6 @@ export class BallController {
         const minDistance = collisionRadius + Math.max(buildingSize.x, buildingSize.z) / 2;
         
         if (distanceToBuilding < minDistance) {
-          collisionDetected = true;
           
           // Calculate push direction (from building center to ball)
           const pushDirection = this.ballPosition.clone().sub(buildingCenter).normalize();
@@ -254,7 +250,7 @@ export class BallController {
       this.sphere.scale.set(squash, stretch, squash);
     }
 
-    this.lastPosition = this.ballPosition.clone();
+
 
     return {
       position: this.ballPosition.clone(),

@@ -1,4 +1,6 @@
 import { translations } from './localization';
+import * as THREE from 'three';
+import { showMegaverse } from './megaverses/megaverse-manager';
 
 type TranslationKey = keyof typeof translations['en'];
 
@@ -86,8 +88,12 @@ document.addEventListener('DOMContentLoaded', () => {
           closeOverlay(overlay);
         });
       }
+
+
     });
   });
+
+
 
   const langToggle = document.getElementById('lang-toggle');
   const langOptions = langToggle?.querySelectorAll('.lang-option');
@@ -180,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // MEGA heading blur effect on scroll
   const megaHeading = document.getElementById('mega-heading');
   const missionWrapper = document.getElementById('mission-wrapper');
+  const scrollIndicator = document.getElementById('scroll-indicator');
   
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
@@ -205,6 +212,15 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         langToggle.classList.remove('is-visible');
         missionWrapper.classList.remove('is-visible');
+      }
+    }
+    
+    // Handle scroll indicator visibility
+    if (scrollIndicator) {
+      if (scrollY > 100) {
+        scrollIndicator.style.opacity = '0';
+      } else {
+        scrollIndicator.style.opacity = '1';
       }
     }
     
@@ -262,4 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 200);
     });
   }
+
+
+
 });

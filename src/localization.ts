@@ -17,6 +17,8 @@ export const translations = {
     // Learn More Button
     learnMore: 'Learn more <span class="arrow">&rarr;</span>',
     
+
+    
     // Project Y
     projectYTitle: 'Project Y',
     projectYTagline: 'AI-orchestrated modular super-app fusing user context and services into one continuous, intelligent ecosystem.',
@@ -90,7 +92,7 @@ export const translations = {
   },
   fr: {
     // Mission Statement
-    missionStatement: `Initiative à but non lucratif accélérant les <span class="mission-bold">technologies économes en ressources</span> pour renforcer les écosystèmes terrestres et la prospérité partagée.`,
+    missionStatement: `Initiative à but non lucratif dédiée à l'<span class="mission-bold">innovation technologique durable</span> pour préserver notre planète et améliorer le bien-être collectif.`,
     
     // Section Titles
     projectsTitle: 'Projets',
@@ -105,6 +107,8 @@ export const translations = {
     
     // Learn More Button
     learnMore: 'En savoir plus <span class="arrow">&rarr;</span>',
+    
+
 
     // Project Y
     projectYTitle: 'Projet Y',
